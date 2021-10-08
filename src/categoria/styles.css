@@ -1,74 +1,61 @@
-*{
+*{ 
     font-family: sans-serif;
-    box-sizing: border-box;
-    
 }
-body{
+
+.container-fluid{
+    
     display:grid;
     background-color:#3949AB;
-    
+    height: 100vh;
 }
 .container{
     display: grid;
-    padding-left: 5%;
-    padding-right: 5%;
-    margin-top: 7%;
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
-    height: 50%;
+    margin-top: 5%;
+    height: 30vmax;
+    width: 60vmax;
     border-radius: 25px;
     box-shadow: 5px 10px 50px;
     background-color: #fff;
-    min-width: 240px;
-    min-height: 440px;
-    max-height: 600px;
 }
 .container-item{
+    display: flex;
+    flex-wrap: nowrap;
     border-radius: 25px;
     box-shadow: 5px 10px 50px;
     background-color: #fff;
-    width: 60%;
-    min-width: 340px;
-    height: 50%;
-    min-height: 100px;
     
+    width: 40vmax;
+    
+    height: 5vmax;
     justify-content: center;
     align-content: center;
 }
 .btn{
     color: #3949AB;
     background-color: #fff;
-    padding: 1.5%;
+    padding: 1%;
     border-radius: 24px;
 }
-.h2{
-    margin:0 auto;
-    align-content: center;
-    display: inline-block;
-    justify-content: center;
-}
+
 .row{
     display: flex;
-    justify-items: around;
     align-content: flex-end;
+    
 }
 .col{
-    justify-content: around;
+    
     padding:5%;
 }
 .container-form{
-    padding: 5%;
     display: grid;
     margin-top: 5%;
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
-    height: 50%;
+    height:  10vmax;
     border-radius: 25px;
     box-shadow: 0px 5px 50px;
     background-color: #fff;
-    min-width: 240px;
-    min-height: 30px;
-    max-height: 200px;
+    width: 60vmax;
+    
 }
