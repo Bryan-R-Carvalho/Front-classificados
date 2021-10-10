@@ -3,7 +3,6 @@
 }
 
 .container-fluid{
-    
     display:grid;
     background-color:#3949AB;
     height: 100vh;
@@ -17,19 +16,6 @@
     box-shadow: 5px 10px 50px;
     background-color: #fff;
 }
-.container-item{
-    display: flex;
-    flex-wrap: nowrap;
-    border-radius: 25px;
-    box-shadow: 5px 10px 50px;
-    background-color: #fff;
-    
-    width: 40vmax;
-    
-    height: 5vmax;
-    justify-content: center;
-    align-content: center;
-}
 .btn{
     color: #3949AB;
     background-color: #fff;
@@ -37,25 +23,17 @@
     border-radius: 24px;
 }
 
-.row{
-    display: flex;
-    align-content: flex-end;
-    
-}
-.col{
-    
-    padding:5%;
-}
 .container-form{
+    
     display: grid;
-    margin-top: 5%;
+
     margin-left: auto;
     margin-right: auto;
     justify-content: center;
     height:  10vmax;
     border-radius: 25px;
-    box-shadow: 0px 5px 50px;
+    box-shadow: 5px 5px 50px;
     background-color: #fff;
-    width: 60vmax;
+    width: 40vmax;
     
 }

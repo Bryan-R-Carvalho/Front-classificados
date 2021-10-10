@@ -41,96 +41,77 @@ export default class Categoria extends Component {
         const url = window.servidor + '/categorias/'
         
         fetch(url, requestOptions)
-            .then(console.log('gravado'))
+            .then(this.preencherLista())
             .catch(erro => console.log(erro))
     }
 
     renderExibirLista = () => {
         return (
-            <div className="container  ">
-            <h2 className="d-inline m-auto ">Lista de categorias</h2>
-            {/*<div className="row justify-content-around ">
-                <div className="col-sm">ID</div>
-                <div className="col-sm">NOME</div>
-                <form  >
-                    <input type="text" className="form-control-sm"  placeholder="Buscar categoria"/>
-                </form>
-            </div>*/}
-            
-            <br/>
-            <table className="table ">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nome</th>
-                    </tr>
-                </thead>
+            <div className="container-fluid "> 
+                <div className="container pb-4 ">
+                    <h2 className="d-inline m-auto ">Lista de categorias</h2>            
+                    <br/>
+                    <table className="table ">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                            </tr>
+                        </thead>
 
-            </table>
-            
-            <ul className="list-group ">
-            {this.state.categorias && this.state.categorias.map(categoria => {
-                    return <li className="list-group-item " key={categoria.id}>
-                            <div className="row">
-                                <div className="col-sm-4 ml-5">{categoria.id}</div>
-                                <div className="col-sm-2 mr-5">{categoria.nome}</div>
-                                <button type="button" className="btn col p-0  btn-outline-primary ">ALTERAR</button>
-                            <button type="button" className="btn col  p-0 btn-outline-primary">EXCLUIR</button>
-                            </div>
-                    </li>
-                })}
-
-               {/* <button type="button" className="btn btn-primary pb-5 " data-toggle="modal" data-target="#exampleModal">Criar categoria</button>*/}
-            </ul> 
-             {/* MOdal */}
-            <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog">
-                <div className="modal-dialog" role="document">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h3 className="modal-title">Criar categoria</h3>
-                            <button type="button" className="close" data-dismiss="modal">
-                                <span>X</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <input type="text" className="form-control-sm "  placeholder="Nome da categoria"/>
-                            
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn ml-3 btn-outline-primary" onClick={() => this.gravarNovo()}>SALVAR</button>
-                        </div>
-                        
-                    </div>
+                    </table>
                 
-                </div>
+                    <ul className="list-group overflow-auto ">
+                    {this.state.categorias && this.state.categorias.map(categoria => {
+                            return <li className="list-group-item " key={categoria.id}>
+                                    <div className="row">
+                                        <div className="col-sm-4 ml-5">{categoria.id}</div>
+                                        <div className="col-sm-2 mr-5">{categoria.nome}</div>
+                                        <button type="button" className="btn col p-0  btn-outline-primary ">ALTERAR</button>
+                                    <button type="button" className="btn col  p-0 btn-outline-primary">EXCLUIR</button>
+                                    </div>
+                            </li>
+                        })}
+
+                    {/* <button type="button" className="btn btn-primary pb-5 " data-toggle="modal" data-target="#exampleModal">Criar categoria</button>*/}
+                    </ul> 
+                    {/* MOdal */}
+                    <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h3 className="modal-title">Criar categoria</h3>
+                                    <button type="button" className="close" data-dismiss="modal">
+                                        <span>X</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <input type="text" className="form-control-sm "  placeholder="Nome da categoria"/>
+                                    
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn ml-3 btn-outline-primary" onClick={() => this.gravarNovo()}>SALVAR</button>
+                                </div>
+                                
+                            </div>
+                        
+                        </div>
+                    </div>
+                    {/* MOdal */}
+                    
             </div>
-            {/* MOdal */}
-        
+            <div className="container-form ">
+                <h2 className="d-inline m-auto ">Cadastrar categorias</h2>
+                <form  className="row ">
+                    <input value={this.state.nome} onChange={this.txtNome_change} type="text" className="col form-control-sm" placeholder="Nome"/>
+                    <button type="button" className="btn btn-outline-primary" onClick={() => this.gravarNovo()}>SALVAR</button>
+                </form>
+            
+            </div>
         </div>
         )
     }
-
-    renderCadastrarNovo=() => {
-        return (
-            <div className="container-fluid "> 
-               
-            <div className="container-form">
-                <h2>Cadastrar categorias</h2>
-                    <form  className="row">
-                    
-                        <input value={this.state.nome} onChange={this.txtNome_change} type="text" className="ml-3 form-control-sm p-0" placeholder="Nome"/>
-                        <button type="button" className="btn ml-3 btn-outline-primary" onClick={() => this.gravarNovo()}>SALVAR</button>
-                        <button type="button" className="btn ml-3 btn-outline-primary">DESFAZER</button>
-                    </form>
-                
-            </div>
-            
-    </div>
-        )
-    }
     render() {
-        return this.renderExibirLista() 
-               
-        
+        return this.renderExibirLista()       
     }
 }
