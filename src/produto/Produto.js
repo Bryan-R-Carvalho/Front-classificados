@@ -11,11 +11,26 @@ export default class Produto extends Component {
         justificativa:"",
         categoriaId:"",
         produtos:[],
-        categorias:[],
+        categorias: [],
+        categoria: 1,
         incluindo:true,
         alterando: false
     }
 
+    cbocat_change = (event) =>{
+        this.setState({categoria: event.target.value})
+    }
+    carregar_categorias = () => {
+        const url = 'http://localhost:8080/categorias'
+        fetch(url)
+        .then(res => res.json())
+        .then(data => this.setState({categorias: data}))
+    }
+
+    componentDidMount = () => {
+        this.carregar_categorias();
+    }
+    
     render() {
         return(
         <div className="container h-75 w-75 d-grid">
@@ -27,8 +42,11 @@ export default class Produto extends Component {
                 </div>
                 <div className="form-group mt-3">
                     <label htmlFor="exampleInputPassword1">Categoria</label>
-                    <select className="form-control" id="exampleFormControlSelect1"> { this.state.categorias.map(categoria => {
-                            return <option className="list-group-item " key={categoria.id}></option>})}</select>
+                    <select className="form-select" onChange={this.cbocat_change}>
+                         { this.state.categorias.map((categoria) => (
+                            <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
+                         ))}
+                    </select>
                 </div>
  
                 <div className="form-group">
