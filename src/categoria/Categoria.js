@@ -123,8 +123,8 @@ export default class Categoria extends Component {
             </div>
             <div className="container-form ">
                 <h2 className="d-inline m-auto ">Cadastrar categorias</h2>
-                <form  className="row flex">
-                    <input value={this.state.nome} onChange={this.txtNome_change} type="text" className="col-5 p-0 form-control-sm" placeholder="Nome"/>
+                <form  className="row flex px-5">
+                    <input value={this.state.nome} onChange={this.txtNome_change} type="text" className="col-sm-4 p-0 form-control-sm" placeholder="Nome"/>
                     <button type="button" className="btn col-sm-4 mx-5 btn-outline-primary" onClick={() => this.gravarNovo()}>SALVAR</button>
                 </form>
             

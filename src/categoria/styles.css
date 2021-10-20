@@ -4,12 +4,12 @@
 
 .container-fluid{
     display:grid;
+    place-items: center;
     background-color:#3949AB;
     height: 100vh;
 }
 .container{
     display: grid;
-    margin-top: 5%;
     height: 30vmax;
     width: 60vmax;
     border-radius: 25px;
@@ -22,12 +22,8 @@
 }
 
 .container-form{
-    
     display: grid;
-
-    margin-left: auto;
-    margin-right: auto;
-    justify-content: center;
+    place-items: center;
     height:  10vmax;
     border-radius: 25px;
     box-shadow: 5px 5px 50px;
