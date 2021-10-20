@@ -1,27 +1,21 @@
-*{ 
-    font-family: sans-serif;
-}
-
 .container-fluid{
     display:grid;
     place-items: center;
     background-color:#3949AB;
     height: 100vh;
 }
-.container{
+.container-xl{
     display: grid;
     height: 30vmax;
-    width: 60vmax;
     border-radius: 25px;
     box-shadow: 5px 10px 50px;
     background-color: #fff;
 }
 .btn{
-    padding: 1%;
     border-radius: 24px;
 }
 
-.container-form{
+.container-sm{
     display: grid;
     place-items: center;
     height:  10vmax;
