@@ -13,22 +13,22 @@ export default class Produto extends Component {
         produtos:[],
         categorias: [],
         categoria: 1,
-        incluindo:true,
+        incluindo: true,
         alterando: false
     }
 
-    cbocat_change = (event) =>{
+    cbocatChange = (event) =>{
         this.setState({categoria: event.target.value})
     }
-    carregar_categorias = () => {
+    carregarCategorias = () => {
         const url = 'http://localhost:8080/categorias'
         fetch(url)
-        .then(res => res.json())
-        .then(data => this.setState({categorias: data}))
+            .then(res => res.json())
+            .then(data => this.setState({categorias: data}))
     }
 
     componentDidMount = () => {
-        this.carregar_categorias();
+        this.carregarCategorias();
     }
     
     render() {
@@ -38,15 +38,15 @@ export default class Produto extends Component {
             <form>
                 <div className="form-group">
                     <label htmlFor="exampleInputEmail1">Nome do produto</label>
-                    <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="" placeholder="Nome"/>
+                    <input type="email" className="form-control" aria-describedby="" placeholder="Nome"/>
                 </div>
                 <div className="form-group mt-3">
                     <label htmlFor="exampleInputPassword1">Categoria</label>
-                    <select className="form-select" onChange={this.cbocat_change}>
+                   {/* <select className="form-select" onChange={this.cbocatChange}>
                          { this.state.categorias.map((categoria) => (
                             <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
                          ))}
-                    </select>
+                         </select>*/}
                 </div>
  
                 <div className="form-group">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Categoria from './categoria/Categoria';
-import Produto  from './produto/Produto';
+import Categoria from './pages/categoria/Categoria';
+import Produto  from './pages/produto/Produto';
 import { Route, Switch } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 
