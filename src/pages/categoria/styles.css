@@ -4,6 +4,10 @@
     background-color:#3949AB;
     height: 100vh;
 }
+.containerCategoria{
+    display: grid;
+    height: 30vmax;
+}
 .container-xl{
     display: grid;
     height: 30vmax;
@@ -11,8 +15,9 @@
     box-shadow: 5px 10px 50px;
     background-color: #fff;
 }
+
 .btn{
-    border-radius: 24px;
+    border-radius: 25px;
 }
 
 .container-sm{

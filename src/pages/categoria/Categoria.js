@@ -93,8 +93,51 @@ export default class Categoria extends Component {
 
     renderIncluir = () => {
         return (
+            
             <div className="container-fluid"> 
+                
                 <div className="container-xl pb-4 ">
+                    <h2 className="d-inline m-auto ">Lista de categorias</h2>            
+                    <br/>
+                    <table className="table ">
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                            </tr>
+                        </thead>
+                    </table>
+                
+                    <ul className="list-group overflow-auto ">
+                    {this.state.categorias && this.state.categorias.map(categoria => {
+                            return <li className="list-group-item " key={categoria.id}>
+                                    <div className="row">
+                                        <div className="col-sm-4 ml-5">{categoria.id}</div>
+                                        <div className="col-sm-2 mr-5">{categoria.nome}</div>
+                                        <button type="button"  className="btn col-2 mx-5 btn-outline-primary btn-block " onClick={() => this.iniciarAlterar(categoria)}>ALTERAR</button>
+                                        <button type="button"  className="btn col-2  btn-outline-danger btn-sm" onClick={() => this.excluir(categoria)}>EXCLUIR</button>
+                                    </div>
+                            </li>
+                        })}
+                    </ul> 
+                    
+                </div>
+            <div className="container-sm ">
+                <h2 className="d-inline m-auto ">Cadastrar categorias</h2>
+                <form  className="row flex px-5">
+                    <input value={this.state.nome} onChange={this.txtNome_change} type="text" className="col-lg form-control-lg" placeholder="Nome"/>
+                    <button type="button" className="btn col-sm mx-5 btn-outline-primary btn-sm" onClick={() => this.gravarNovo()}>SALVAR</button>
+                </form>
+            
+            </div>
+        </div>
+        )
+    }
+
+    renderAlterar = () => {
+        return (
+            <div className="container-fluid "> 
+                <div className="container-xl containerCategoria pb-4 ">
                     <h2 className="d-inline m-auto ">Lista de categorias</h2>            
                     <br/>
                     <table className="table ">
@@ -115,48 +158,6 @@ export default class Categoria extends Component {
                                         <div className="col-sm-2 mr-5">{categoria.nome}</div>
                                         <button type="button"  className="btn col-2 mx-5 btn-outline-primary btn-block " onClick={() => this.iniciarAlterar(categoria)}>ALTERAR</button>
                                         <button type="button"  className="btn col-2  btn-outline-danger btn-sm" onClick={() => this.excluir(categoria)}>EXCLUIR</button>
-                                    </div>
-                            </li>
-                        })}
-                    </ul> 
-                    
-            </div>
-            <div className="container-sm ">
-                <h2 className="d-inline m-auto ">Cadastrar categorias</h2>
-                <form  className="row flex px-5">
-                    <input value={this.state.nome} onChange={this.txtNome_change} type="text" className="col-lg form-control-lg" placeholder="Nome"/>
-                    <button type="button" className="btn col-sm mx-5 btn-outline-primary btn-sm" onClick={() => this.gravarNovo()}>SALVAR</button>
-                </form>
-            
-            </div>
-        </div>
-        )
-    }
-
-    renderAlterar = () => {
-        return (
-            <div className="container-fluid "> 
-                <div className="container-xl pb-4 ">
-                    <h2 className="d-inline m-auto ">Lista de categorias</h2>            
-                    <br/>
-                    <table className="table ">
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Nome</th>
-                            </tr>
-                        </thead>
-
-                    </table>
-                
-                    <ul className="list-group overflow-auto ">
-                    {this.state.categorias && this.state.categorias.map(categoria => {
-                            return <li className="list-group-item " key={categoria.id}>
-                                    <div className="row">
-                                        <div className="col-sm-4 ml-5">{categoria.id}</div>
-                                        <div className="col-sm-2 mr-5">{categoria.nome}</div>
-                                        <button type="button"  className="btn col-2 mx-5  btn-outline-primary  " onClick={() => this.iniciarAlterar(categoria)}>ALTERAR</button>
-                                        <button type="button"  className="btn col-2 btn-outline-danger " onClick={() => this.excluir(categoria)}>EXCLUIR</button>
                                     </div>
                             </li>
                         })}
