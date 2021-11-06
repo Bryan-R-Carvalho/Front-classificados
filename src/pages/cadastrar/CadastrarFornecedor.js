@@ -35,7 +35,7 @@ export default function Cadastrar() {
     };
 
     try{
-      const response = await api.post('/fornecedor/', JSON.stringify(data))
+      await api.post('/fornecedor/', JSON.stringify(data))
       alert(`Cadastro realizado com sucesso! Bem-vindo ${data.nome}!`);
       history.push('/');
     }catch(err){
