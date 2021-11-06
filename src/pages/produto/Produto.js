@@ -10,7 +10,7 @@ export default class Produto extends Component {
         disponibilidade:false,
         justificativa:"",
         categoriaId:"",
-        produtos:[],
+        produtos: [],
         categorias: [],
         categoria: 1,
         incluindo: false,
@@ -33,28 +33,30 @@ export default class Produto extends Component {
     }
 
     preencherLista = () => {
-        const url = window.servidor + '/produtos/'
+        const url = 'http://localhost:8080/produtos/'
         fetch(url)
-            .then(res => res.json())
-            .then(data => this.setState({produtos: data}))
-            .catch(erro => console.log(erro))
+        .then(response => response.json().then(data => {
+            this.setState({produtos: data})
+        }))
+        .catch(erro => console.log(erro))        
+             
     }
+
     componentDidMount = () => {
         this.preencherLista();
+        this.carregarCategorias();
     }
     
     carregarCategorias = () => {
         const url = 'http://localhost:8080/categorias/'
         fetch(url)
-            .then(res => res.json())
-            .then(data => this.setState({categorias: data}))
-    }
-    componentDidMount = () => {
-        this.carregarCategorias();
+        .then(response => response.json().then(data => {
+            this.setState({categorias: data});
+        }))
+        .catch(erro => console.log(erro))  
+      
     }
     
-    
-
     gravarNovo = () => {
         const dados = {
 
@@ -76,8 +78,10 @@ export default class Produto extends Component {
         const url = window.servidor + '/produtos/'
         
         fetch(url, requestOptions)
-            .then(this.setState({incluindo: false}))
-            .then(this.preencherLista())
+            .then(fim => {
+                this.setState({incluindo: false});
+                this.preencherLista();
+            })
             .catch(erro => console.log(erro))
     }
     
@@ -92,9 +96,10 @@ export default class Produto extends Component {
         const url = window.servidor + "/produtos/" + produto.id
         console.log(url);
         fetch(url, requestOptions)
-            .then(console.log("deletado"))
-            .then(this.preencherLista())
-            .catch(erro => console.log(erro))
+            .then(resp => {
+                console.log("deletado");
+                this.preencherLista();
+            }).catch(erro => console.log(erro))
     }
 
     renderExibirLista = () => {
@@ -106,10 +111,11 @@ export default class Produto extends Component {
                 <table className="table ">
                     <thead>
                         <tr>
-                            <th scope="col">Nome</th>
-                            <th scope="col">categoria</th>
-                            <th scope="col">Disponibilidade</th>
-                            <th scope="col">Aprovado</th>
+                            <th className="col-sm-2" scope="col">Nome</th>
+                            <th className="col-sm-3" scope="col">Categoria</th>
+                            <th className="col-sm-2" scope="col">Disponibilidade</th>
+                            <th className="col-sm-3" scope="col">Aprovado</th>
+                            <th className="col-sm " scope="col">Alteraçoes</th>
                         </tr>
                     </thead>
                 </table>
@@ -118,12 +124,12 @@ export default class Produto extends Component {
                 {this.state.produtos && this.state.produtos.map(produto => {
                         return <li className="list-group-item " key={produto.id}>
                                 <div className="row">
-                                    <div className="col-sm-4 ml-5">{produto.nome}</div>
-                                    <div className="col-sm-2 mr-5">{produto.categoria}</div>
-                                    <div className="col-sm-2 mr-5">{produto.disponibilidade}</div>
-                                    <div className="col-sm-2 mr-5">{produto.aprovado}</div>
-                                    <button type="button"  className="btn col-2 mx-5 btn-outline-primary btn-block " onClick={() => this.iniciarAlterar(produto)}>ALTERAR</button>
-                                    <button type="button"  className="btn col-2  btn-outline-danger btn-sm" onClick={() => this.excluir(produto)}>EXCLUIR</button>
+                                    <div className="col-sm-2 ">{produto.nome}</div>
+                                    <div className="col-sm ">{produto.categoria.nome}</div>
+                                    <div className="col-sm ">{produto.disponibilidade}</div>
+                                    <div className="col-sm ">{produto.aprovado}</div>
+                                    <button type="button"  className="btn col-1 mx-3 btn-outline-primary btn-sm " onClick={() => this.iniciarAlterar(produto)}>ALTERAR</button>
+                                    <button type="button"  className="btn col-1 btn-outline-danger btn-sm" onClick={() => this.excluir(produto)}>EXCLUIR</button>
                                 </div>
                         </li>
                     })}

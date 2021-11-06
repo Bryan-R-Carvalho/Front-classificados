@@ -20,8 +20,9 @@ export default class Categoria extends Component {
     preencherLista = () => {
         const url = window.servidor + '/categorias/'
         fetch(url)
-            .then(res => res.json())
-            .then(data => this.setState({categorias: data}))
+        .then(response => response.json().then(data => {
+            this.setState({categorias: data})
+        }))
     }
 
     componentDidMount(){
@@ -50,8 +51,10 @@ export default class Categoria extends Component {
         const url = window.servidor + '/categorias/'
         
         fetch(url, requestOptions)
-            .then(this.setState({incluindo: false}))
-            .then(this.preencherLista())
+            .then(resp => {
+                this.setState({incluindo: false});
+                this.preencherLista();
+            })
             .catch(erro => console.log(erro))
     }
 
@@ -71,8 +74,10 @@ export default class Categoria extends Component {
         const url = window.servidor + '/categorias/'
         
         fetch(url, requestOptions)
-            .then(this.setState({alterando: false, incluindo:true}))
-            .then(this.preencherLista())
+            .then(resp => {
+                this.setState({alterando: false, incluindo:true})
+                this.preencherLista()
+            })
             .catch(erro => console.log(erro))
     }
 
@@ -86,7 +91,6 @@ export default class Categoria extends Component {
         const url = window.servidor + "/categorias/" + categoria.id
         console.log(url);
         fetch(url, requestOptions)
-            .then(console.log("deletado"))
             .then(this.preencherLista())
             .catch(erro => console.log(erro))
     }
