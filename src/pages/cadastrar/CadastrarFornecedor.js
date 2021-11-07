@@ -44,7 +44,7 @@ export default function Cadastrar() {
   }
 
   return (
-    <div className="App">
+    <div className="cadastrar-container">
       <main>
         <div id="welcome">
           <img src={logo} alt="logo"/>

@@ -1,8 +1,9 @@
-html{
-    background-color: #3949AB;
+.cadastrar-container{
+    background-color:#3949AB;
+    height: 100vh;
 }
 
-main {
+.cadastrar-container main {
     position: absolute;
     width: 1218px;
     height: 743px;
@@ -18,7 +19,7 @@ main {
     border-radius: 24px;
 }
 
-strong{
+.cadastrar-container #cadastrar strong{
  
     display: flex;
     justify-content: center;
@@ -33,7 +34,7 @@ strong{
     color: #343434;
 }
 
-#cadastrar{
+.cadastrar-container #cadastrar{
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -49,21 +50,21 @@ strong{
     border-radius: 0px 24px 24px 0px;
 }
 
-#form {
+.cadastrar-container #form {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 10px;
 }
 
-#buttons{
+.cadastrar-container #buttons{
     display: flex;
     flex-direction: column;
     align-items: center;
 
 }
 
-h6{
+.cadastrar-container div button h6{
     font-family: Open Sans;
     font-style: normal;
     font-weight: normal;
@@ -72,7 +73,7 @@ h6{
     color: #828282;
 }
 
-button{
+.cadastrar-container button{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -84,17 +85,17 @@ button{
     border-radius: 40px;
 }
 
-.primary{
+.cadastrar-container .primary{
     color: white;
     background: #3949AB;
 }
 
-.secondary{
+.cadastrar-container .secondary{
     color: #3949AB;
     background:white;
 }
 
-.form-control{
+.cadastrar-container .form-control{
     width: 358px;
     height: 40px;
 
@@ -114,7 +115,7 @@ button{
 
 }
 
-.form-chkbox{
+.cadastrar-container .form-chkbox{
     margin: 10px 0px;
     
 
@@ -128,7 +129,7 @@ button{
 
 }
 
-img{
+.cadastrar-container main div img{
     position: absolute;
     left: 21.51%;
     right: 60.34%;
@@ -138,7 +139,7 @@ img{
     width: 221px;
 }
 
-h4{
+.cadastrar-container main div h4{
     position: absolute;
     width: 315px;
     height: 70px;
@@ -156,7 +157,7 @@ h4{
     color: #FFFFFF;    
 }
 
-h5{
+.cadastrar-container main div h5{
     position: absolute;
     width: 315px;
     height: 70px;
