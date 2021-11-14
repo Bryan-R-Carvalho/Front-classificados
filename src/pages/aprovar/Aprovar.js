@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import api from '../../services/api';
 import './styles.css';
 
-export default function Fornecedor() {
+export default function AprovarFornecedor() {
 
     const [fornecedores, setFornecedores] = useState([]);
 
@@ -15,6 +15,29 @@ export default function Fornecedor() {
         }
         carregarFornecedor();
     }, []);
+
+    async function aprovarFornecedor(f){
+
+        const data = {
+            id: f.id,
+            nome: f.nome,
+            telefone: f.telefone,
+            whatsapp: f.whatsapp,
+            site: f.site,
+            instagram: f.instagram,
+            endereco: f.endereco,
+            delivery: f.delivery,
+            aprovado: true,
+        };
+
+
+        try{
+            await api.put("/fornecedor/", JSON.stringify(data));
+            setFornecedores(fornecedores.filter(fornecedor => fornecedor.id !== f.id));
+        }catch(err){
+            alert("Erro ao aprovar o fornecedor, tente novamente");
+        }
+    }
   
 
   return (
@@ -22,9 +45,9 @@ export default function Fornecedor() {
         <header>
             <span>Lista de fornecedores</span>
         </header>
-        <h1>Fornecedores</h1>
+        <h1>Aprovar Fornecedores</h1>
         <ul>
-                {fornecedores.map(fornecedor => (
+                {fornecedores.filter(fornecedor => fornecedor.aprovado === false).map(fornecedor => (
                     <li Key={fornecedor.id}>
                         <div className="group">
                             <strong>Fornecedor:</strong>
@@ -59,7 +82,9 @@ export default function Fornecedor() {
                         <div className="group">
                             <strong>Delivery:</strong>
                             <p>{fornecedor.delivery ? "Sim" : "Não"}</p>
+                            <button onClick={() => aprovarFornecedor(fornecedor)} type="button">Aprovar</button>
                         </div>
+                        
                     </li>
                 ))}
         </ul>

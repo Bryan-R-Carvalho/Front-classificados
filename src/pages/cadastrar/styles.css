@@ -83,6 +83,12 @@
     height: 40px;
     
     border-radius: 40px;
+
+    transition: filter 0.2;
+}
+
+.cadastrar-container button:hover{
+    filter: brightness(90%);
 }
 
 .cadastrar-container .primary{
