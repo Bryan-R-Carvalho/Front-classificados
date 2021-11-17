@@ -44,7 +44,7 @@ export default function Cadastrar() {
   }
 
   return (
-    <div className="App">
+    <div className="cadastrar-container">
       <main>
         <div id="welcome">
           <img src={logo} alt="logo"/>
@@ -56,28 +56,28 @@ export default function Cadastrar() {
           <form onSubmit={Cadastrar}>
             <div id="form">
               <div>
-                <input type="text" className="form-control" placeholder="Nome" aria-label="Nome" value ={nome} onChange={e => setNome(e.target.value)}/>
+                <input type="text" className="form-control" placeholder="Nome" aria-label="Nome" value ={nome} onChange={e => setNome(e.target.value)} required/>
               </div>
               <div>
-                <input type="tel" className="form-control" placeholder="Telefone" aria-label="Telefone" value ={telefone} onChange={e => setTelefone(e.target.value)}/>
+                <input type="tel" className="form-control" placeholder="Telefone" aria-label="Telefone" value ={telefone} onChange={e => setTelefone(e.target.value)} required/>
               </div>
               <div>
-                <input type="tel" className="form-control" placeholder="Whatsapp" aria-label="Whatsapp" value ={whatsapp} onChange={e => setWhatsapp(e.target.value)}/>
+                <input type="tel" className="form-control" placeholder="Whatsapp" aria-label="Whatsapp" value ={whatsapp} onChange={e => setWhatsapp(e.target.value)} required/>
               </div>
               <div>
-                <input type="text" className="form-control" placeholder="Site" aria-label="Site" value ={site} onChange={e => setSite(e.target.value)}/>
+                <input type="text" className="form-control" placeholder="Site" aria-label="Site" value ={site} onChange={e => setSite(e.target.value)} required/>
               </div>
               <div>
-                <input type="text" className="form-control" placeholder="Instagram" aria-label="Instagram" value ={instagram} onChange={e => setInstagram(e.target.value)}/>
+                <input type="text" className="form-control" placeholder="Instagram" aria-label="Instagram" value ={instagram} onChange={e => setInstagram(e.target.value)} required/>
               </div>
               <div>
-                <input type="text" className="form-control" placeholder="Endereço" aria-label="Endereço" value ={endereco} onChange={e => setEndereco(e.target.value)}/>
+                <input type="text" className="form-control" placeholder="Endereço" aria-label="Endereço" value ={endereco} onChange={e => setEndereco(e.target.value)} required/>
               </div>
               <div>
-                <input type="password" className="form-control" placeholder="Senha" aria-label="Senha" value ={senha} onChange={e => setSenha(e.target.value)}/>
+                <input type="password" className="form-control" placeholder="Senha" aria-label="Senha" value ={senha} onChange={e => setSenha(e.target.value)} required/>
               </div>
               <div>
-                <input type="password" className="form-control" placeholder="Confirmar senha" aria-label="Confirmar senha" value ={confsenha} onChange={e => setConfSenha(e.target.value)}/>
+                <input type="password" className="form-control" placeholder="Confirmar senha" aria-label="Confirmar senha" value ={confsenha} onChange={e => setConfSenha(e.target.value)} required/>
               </div>
               <div>
                 <input type="checkbox" className="form-chkbox" checked={delivery} onChange={e => setDelivery(e.target.checked)}/>
