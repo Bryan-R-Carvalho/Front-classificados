@@ -41,10 +41,10 @@ export default class Produto extends Component {
         this.setState({disponibilidade: event.target.value})
     }
     txtDescChange = (event) =>{
-        this.setState({cadescricao: event.target.value})
+        this.setState({descricao: event.target.value})
     }
     txtJustChange = (event) =>{
-        this.setState({cadescricao: event.target.value})
+        this.setState({justificativa: event.target.value})
     }
 
     preencherLista = () => {
@@ -180,19 +180,19 @@ export default class Produto extends Component {
                         <br/>
                         <label className="pe-2 ">Aprovado</label>
                         <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" className="btn-check" name="aprovacao" id="btnradio1Aprov" autoComplete="off" value={this.state.Aprovado}  />
+                            <input type="radio" className="btn-check" name="aprovacao" id="btnradio1Aprov" autoComplete="off" value={this.state.aprovado}  />
                             <label className="btn btn-outline-primary" for="btnradio1Aprov">sim</label>
 
-                            <input type="radio" className="btn-check" name="aprovacao" id="btnradio2Aprov" value={this.state.Aprovado} autoComplete="off" checked/>
+                            <input type="radio" className="btn-check" name="aprovacao" id="btnradio2Aprov" value={this.state.aprovado} autoComplete="off" defaultChecked/>
                             <label className="btn btn-outline-primary" for="btnradio2Aprov">Não</label>
                         </div>
 
                         <label className="pe-2 ps-5">Disponibilidade</label>
                         <div className="btn-group pb-2" role="group" aria-label="Basic radio toggle button group ">
-                            <input type="radio" className="btn-check" name="btnradio" id="btnradio1Dispo" value={this.state.Disponibilidade} autoComplete="off" />
+                            <input type="radio" className="btn-check" name="btnradio" id="btnradio1Dispo" value={this.state.disponibilidade} autoComplete="off" />
                             <label className="btn btn-outline-primary" for="btnradio1Dispo">sim</label>
 
-                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2Dispo" value={this.state.Disponibilidade} autoComplete="off" checked/>
+                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2Dispo" value={this.state.disponibilidade} autoComplete="off" defaultChecked/>
                             <label className="btn btn-outline-primary" for="btnradio2Dispo">Não</label>
 
                         </div>
@@ -206,7 +206,7 @@ export default class Produto extends Component {
                             <label className="col-sm-2 " >Justificativa</label>
                             <textarea className="form-control-sm mx-3 pe-5 pb-2" />
                         </div>
-                        <button type="submit" className="btn btn-primary px-5">Enviar</button>
+                        <button type="submit" className="btn btn-primary px-5" onClick={() => this.gravarNovo()}>Enviar</button>
                         <button type="button"  className="btn col-2 btn-outline-primary btn-sm" onClick={() => this.iniciarExibir()}>Mostrar lista de produtos</button>
                     </form>
                     
