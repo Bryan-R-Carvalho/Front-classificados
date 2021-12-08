@@ -52,7 +52,7 @@ export default class Categoria extends Component {
         
         fetch(url, requestOptions)
             .then(resp => {
-                this.setState({incluindo: false});
+                this.setState({incluindo: true});
                 this.preencherLista();
             })
             .catch(erro => console.log(erro))
@@ -89,7 +89,6 @@ export default class Categoria extends Component {
             }
         };
         const url = window.servidor + "/categorias/" + categoria.id
-        console.log(url);
         fetch(url, requestOptions)
             .then(this.preencherLista())
             .catch(erro => console.log(erro))

@@ -25,11 +25,26 @@ export default class Produto extends Component {
         this.setState({incluindo: false, alterando: true, exibindo: false, id:produto.id, nome: produto.nome, descricao: produto.descricao, categoriaId: produto.categoria_id, aprovado:produto.aprovado, disponibilidade:produto.disponibilidade, justificativa:produto.justificativa})
     }
     iniciarExibir = () => {
-        this.setState({exibindo: true, incluindo: false, alterando: false})
+        this.setState({incluindo: false, alterando: false, exibindo: true})
     }
 
+    txtnomeChange = (event) =>{
+        this.setState({nome: event.target.value})
+    }
     cbocatChange = (event) =>{
         this.setState({categoria: event.target.value})
+    }
+    comboAprovadoChange = (event) =>{
+        this.setState({aprovado: event.target.value})
+    }
+    comboDispChange = (event) =>{
+        this.setState({disponibilidade: event.target.value})
+    }
+    txtDescChange = (event) =>{
+        this.setState({cadescricao: event.target.value})
+    }
+    txtJustChange = (event) =>{
+        this.setState({cadescricao: event.target.value})
     }
 
     preencherLista = () => {
@@ -93,8 +108,8 @@ export default class Produto extends Component {
                 'Content-Type': 'application/json',
             }
         };
-        const url = window.servidor + "/produtos/" + produto.id
-        console.log(url);
+        //const url = window.servidor + "/produtos/" + produto.id
+        const url = "http://localhost:8080" + "/produtos/" + produto.id
         fetch(url, requestOptions)
             .then(resp => {
                 console.log("deletado");
@@ -106,15 +121,15 @@ export default class Produto extends Component {
     renderExibirLista = () => {
         return(
             <div className="fundo container-fluid d-grid" >
-                <div className="container-xl d-grid bg-white h-75 w-100 p-auto">
-                    <h2 className="d-inline m-auto ">Lista de produtos</h2>            
+                <div className="container-xl d-grid bg-white h-75 w-100 p-auto ">
+                    <h2 className="d-inline m-auto  ">Lista de produtos</h2>            
                     <br/>
-                    <table className="table ">
+                    <table className="table  ">
                         <thead>
                             <tr>
                                 <th className="col-sm-2" scope="col">Nome</th>
-                                <th className="col-sm-3" scope="col">Categoria</th>
-                                <th className="col-sm-2" scope="col">Disponibilidade</th>
+                                <th className="col-sm-2" scope="col">Categoria</th>
+                                <th className="col-sm-3" scope="col">Disponibilidade</th>
                                 <th className="col-sm-3" scope="col">Aprovado</th>
                                 <th className="col-sm " scope="col">Alteraçoes</th>
                             </tr>
@@ -126,9 +141,9 @@ export default class Produto extends Component {
                             return <li className="list-group-item " key={produto.id}>
                                     <div className="row">
                                         <div className="col-sm-2 ">{produto.nome}</div>
-                                        <div className="col-sm ">{produto.categoria.nome}</div>
-                                        <div className="col-sm ">{produto.disponibilidade}</div>
-                                        <div className="col-sm ">{produto.aprovado}</div>
+                                        <div className="col-sm-2 ">{produto.categoria.nome}</div>
+                                        <div className="col-sm-3 ">{produto.disponibilidade? "SIM" : "NÃO"}</div>
+                                        <div className="col-sm-3">{produto.aprovado? "SIM" : "NÃO"}</div>
                                         <div className="col-2 btn-group">
                                             <button type="button" className="btn btn-outline-primary" onClick={() => this.iniciarAlterar(produto)}>Alterar</button>
                                             <button type="button" className="btn btn-outline-danger" onClick={() => this.excluir(produto)}>Excluir</button>
@@ -149,12 +164,12 @@ export default class Produto extends Component {
                     <h2 className="m-auto">Cadastro de produtos</h2>
                     <form>
                         <div className="form-group pb-2 ">
-                            <label value={this.state.nome} type="text" className="col-sm-2">Nome do produto</label>
-                            <input className="form-control-sm mx-3 col-sm-3"  placeholder="Nome"/>
+                            <label type="text" className="col-sm-2">Nome do produto</label>
+                            <input value={this.state.nome} onChange={this.txtnomeChange} className="form-control-sm mx-3 col-sm-3"  placeholder="Nome"/>
                         </div>
                         <div className="form-group  pb-2">
                             <label className="col-sm-2" >Categoria</label>
-                                <select className="form-select-lg mx-3 col-sm-2 " onChange={this.cbocatChange} >
+                                <select className="form-select-lg mx-3 col-sm-2" onChange={this.cbocatChange} >
                                     {this.state.categorias.map((categoria) => (
                                         <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
                                 ))}
@@ -162,47 +177,33 @@ export default class Produto extends Component {
                                 </select>
                         </div>
 
-                        <div className="form-group pb-2">           
-                            <label className="pe-2">Aprovado</label>
-                            <div className="form-check form-check-inline">
-                                <input className="form-check-input" type="radio" name="aprovacao"  value="true"/>
-                                <label className="form-check-label" >Sim</label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                                <input className="form-check-input" type="radio" name="aprovacao" value="false"/>
-                                <label className="form-check-label" >Não</label>
-                            </div>
-                        </div>
-                        
                         <br/>
-                        <label className="pe-2">Disponibilidade</label>
+                        <label className="pe-2 ">Aprovado</label>
                         <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" className="btn-check" name="btnradio" id="btnradio1" autocomplete="off" />
-                            <label className="btn btn-outline-primary" for="btnradio1">sim</label>
+                            <input type="radio" className="btn-check" name="aprovacao" id="btnradio1Aprov" autoComplete="off" value={this.state.Aprovado}  />
+                            <label className="btn btn-outline-primary" for="btnradio1Aprov">sim</label>
 
-                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2" autocomplete="off" checked/>
-                            <label className="btn btn-outline-primary" for="btnradio2">Não</label>
-
+                            <input type="radio" className="btn-check" name="aprovacao" id="btnradio2Aprov" value={this.state.Aprovado} autoComplete="off" checked/>
+                            <label className="btn btn-outline-primary" for="btnradio2Aprov">Não</label>
                         </div>
 
-                        <div className="form-group pb-2">           
-                            <label className="pe-2">Disponibilidade</label>
-                            <div className="form-check form-check-inline">
-                                <input className="form-check-input" type="radio" name="disponibilidade"  value="true"/>
-                                <label className="form-check-label" >Sim</label>
-                            </div>
-                            <div className="form-check form-check-inline">
-                                <input className="form-check-input" type="radio" name="disponibilidade"  value="false"/>
-                                <label className="form-check-label">Não</label>
-                            </div>
+                        <label className="pe-2 ps-5">Disponibilidade</label>
+                        <div className="btn-group pb-2" role="group" aria-label="Basic radio toggle button group ">
+                            <input type="radio" className="btn-check" name="btnradio" id="btnradio1Dispo" value={this.state.Disponibilidade} autoComplete="off" />
+                            <label className="btn btn-outline-primary" for="btnradio1Dispo">sim</label>
+
+                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2Dispo" value={this.state.Disponibilidade} autoComplete="off" checked/>
+                            <label className="btn btn-outline-primary" for="btnradio2Dispo">Não</label>
+
                         </div>
+                        <br/>
                     
                         <div className="form-group pb-2 ">
                             <label className="col-sm-2" >Descrição</label>
                             <textarea className="form-control-sm mx-3 pe-5 pb-2"  placeholder="Descreva o produto"/>
                         </div>
                         <div className="form-group pb-2 ">
-                            <label className="col-sm-2" >Justificativa</label>
+                            <label className="col-sm-2 " >Justificativa</label>
                             <textarea className="form-control-sm mx-3 pe-5 pb-2" />
                         </div>
                         <button type="submit" className="btn btn-primary px-5">Enviar</button>
