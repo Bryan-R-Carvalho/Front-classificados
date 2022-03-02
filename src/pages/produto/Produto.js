@@ -108,12 +108,8 @@ export default class Produto extends Component {
                 'Content-Type': 'application/json',
             }
         };
-<<<<<<< Updated upstream
         //const url = window.servidor + "/produtos/" + produto.id
         const url = "http://localhost:8080" + "/produtos/" + produto.id
-=======
-        const url = window.servidor + "/produtos/" + produto.id
->>>>>>> Stashed changes
         fetch(url, requestOptions)
             .then(resp => {
                 console.log("deletado");
