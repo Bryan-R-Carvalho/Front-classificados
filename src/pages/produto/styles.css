@@ -6,3 +6,10 @@
     background-color:#3949AB;
     height: 100vh;
 }
+.input{
+    height: 30px;
+}
+
+th{
+    max-height: 10px;
+}

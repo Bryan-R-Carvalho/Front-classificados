@@ -11,11 +11,13 @@ export default class Produto extends Component {
         justificativa:"",
         categoriaId:"",
         produtos: [],
+        produtosFiltro: [],
         categorias: [],
         categoria: 1,
         incluindo: false,
         alterando:false,
-        exibindo: true //mostrar a lista
+        exibindo: true, //mostrar a lista
+        filtro: ""
     }
 
     iniciarNovo = () => {
@@ -32,7 +34,7 @@ export default class Produto extends Component {
         this.setState({nome: event.target.value})
     }
     cbocatChange = (event) =>{
-        this.setState({categoria: event.target.value})
+        this.setState({categoriaId: event.target.value})
     }
     comboAprovadoChange = (event) =>{
         this.setState({aprovado: event.target.value})
@@ -45,6 +47,9 @@ export default class Produto extends Component {
     }
     txtJustChange = (event) =>{
         this.setState({justificativa: event.target.value})
+    }
+    txtFiltroChange = event => {
+        this.setState({filtro: event.target.value})
     }
 
     preencherLista = () => {
@@ -88,13 +93,14 @@ export default class Produto extends Component {
                 'Content-Type': 'application/json'
             },
         
-        body: JSON.stringify(dados)
+            body: JSON.stringify(dados)
         };
         const url = window.servidor + '/produtos/'
         
         fetch(url, requestOptions)
             .then(fim => {
                 this.setState({incluindo: false});
+                this.setState({exibindo: true});
                 this.preencherLista();
             })
             .catch(erro => console.log(erro))
@@ -122,41 +128,62 @@ export default class Produto extends Component {
         return(
             <div className="fundo container-fluid d-grid" >
                 <div className="container-xl d-grid bg-white h-75 w-100 p-auto ">
-                    <h2 className="d-inline m-auto  ">Lista de produtos</h2>            
-                    <br/>
-                    <table className="table  ">
-                        <thead>
+                    <h2 className="d-inline m-auto  ">Lista de produtos</h2>      
+                    <div className='col-sm-4'>
+                        <input type="text" onChange={this.txtFiltroChange} className="form-control input" placeholder="Buscar Produto"></input>      
+                    </div>
+                    <table className="table">
+                        <thead >
                             <tr>
                                 <th className="col-sm-2" scope="col">Nome</th>
                                 <th className="col-sm-2" scope="col">Categoria</th>
                                 <th className="col-sm-3" scope="col">Disponibilidade</th>
                                 <th className="col-sm-3" scope="col">Aprovado</th>
-                                <th className="col-sm " scope="col">Alteraçoes</th>
+                                <th className="col-sm-2 " scope="col">Alteraçoes</th>
                             </tr>
                         </thead>
                     </table>
                 
                     <ul className="list-group overflow-auto">
-                    {this.state.produtos && this.state.produtos.map(produto => {
-                            return <li className="list-group-item " key={produto.id}>
-                                    <div className="row">
-                                        <div className="col-sm-2 ">{produto.nome}</div>
-                                        <div className="col-sm-2 ">{produto.categoria.nome}</div>
-                                        <div className="col-sm-3 ">{produto.disponibilidade? "SIM" : "NÃO"}</div>
-                                        <div className="col-sm-3">{produto.aprovado? "SIM" : "NÃO"}</div>
-                                        <div className="col-2 btn-group">
-                                            <button type="button" className="btn btn-outline-primary" onClick={() => this.iniciarAlterar(produto)}>Alterar</button>
-                                            <button type="button" className="btn btn-outline-danger" onClick={() => this.excluir(produto)}>Excluir</button>
-                                        </div>
-                                    </div>
-                            </li>
-                        })}
+                        {this.renderLista}
                     </ul> 
                     <button type="button"  className="btn col-2  btn-outline-primary btn-sm" onClick={() => this.iniciarNovo()}>Novo produto</button>
                 </div>
             </div>
         )
     }
+
+    renderLista = () => {
+        if(this.state.filtro != ""){
+            this.state.produtosFiltro = []
+
+            this.state.produtos.map(produto => {
+                if(!produto.nome.indexOf(this.state.filtro)){
+                    this.state.produtosFiltro.push(produto)
+                }
+            })
+        } else {
+            this.state.produtosFiltro = this.state.produtos
+        }
+
+        return (
+            this.state.produtosFiltro && this.state.produtosFiltro.map(produto => {
+                return <li className="list-group-item " key={produto.id}>
+                        <div className="row">
+                            <div className="col-sm-2 ">{produto.nome}</div>
+                            <div className="col-sm-2 ">{produto.categoria.nome}</div>
+                            <div className="col-sm-3 ">{produto.disponibilidade? "SIM" : "NÃO"}</div>
+                            <div className="col-sm-3">{produto.aprovado? "SIM" : "NÃO"}</div>
+                            <div className="col-2 btn-group">
+                                <button type="button" className="btn btn-outline-primary" onClick={() => this.iniciarAlterar(produto)}>Alterar</button>
+                                <button type="button" className="btn btn-outline-danger" onClick={() => this.excluir(produto)}>Excluir</button>
+                            </div>
+                        </div>
+                </li>
+            })
+        )
+    }
+    
     renderIncluir = () => {
         return(
             <div className="fundo container-fluid d-grid" >
@@ -169,7 +196,7 @@ export default class Produto extends Component {
                         </div>
                         <div className="form-group  pb-2">
                             <label className="col-sm-2" >Categoria</label>
-                                <select className="form-select-lg mx-3 col-sm-2" onChange={this.cbocatChange} >
+                                <select value={this.state.categoriaId} className="form-select-lg mx-3 col-sm-2" onChange={this.cbocatChange} >
                                     {this.state.categorias.map((categoria) => (
                                         <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
                                 ))}
@@ -200,13 +227,13 @@ export default class Produto extends Component {
                     
                         <div className="form-group pb-2 ">
                             <label className="col-sm-2" >Descrição</label>
-                            <textarea className="form-control-sm mx-3 pe-5 pb-2"  placeholder="Descreva o produto"/>
+                            <textarea className="form-control-sm mx-3 pe-5 pb-2"  value={this.state.descricao} onChange={this.txtDescChange} placeholder="Descreva o produto"/>
                         </div>
                         <div className="form-group pb-2 ">
                             <label className="col-sm-2 " >Justificativa</label>
-                            <textarea className="form-control-sm mx-3 pe-5 pb-2" />
+                            <textarea value={this.state.justificativa} onChange={this.txtJustChange} className="form-control-sm mx-3 pe-5 pb-2" />
                         </div>
-                        <button type="submit" className="btn btn-primary px-5" onClick={() => this.gravarNovo()}>Enviar</button>
+                        <button type="button" className="btn btn-primary px-5" onClick={() => this.gravarNovo()}>Enviar</button>
                         <button type="button"  className="btn col-2 btn-outline-primary btn-sm" onClick={() => this.iniciarExibir()}>Mostrar lista de produtos</button>
                     </form>
                     
