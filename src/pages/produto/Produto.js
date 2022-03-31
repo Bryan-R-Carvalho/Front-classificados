@@ -19,10 +19,32 @@ export default class Produto extends Component {
     }
 
     iniciarNovo = () => {
-        this.setState({ incluindo: true, alterando: false, exibindo: false, nome: '', descricao: '', categoria: 1, aprovado: false, disponibilidade: false, justificativa: '' })
+        this.setState({
+            incluindo: true,
+            alterando: false,
+            exibindo: false,
+            nome: "",
+            descricao: "",
+            categoria: 1,
+            aprovado: false,
+            disponibilidade: false,
+            justificativa: "",
+        })
     }
+
     iniciarAlterar = (produto) => {
-        this.setState({ incluindo: false, alterando: true, exibindo: false, id: produto.id, nome: produto.nome, descricao: produto.descricao, categoriaId: produto.categoriaId, aprovado: produto.aprovado, disponibilidade: produto.disponibilidade, justificativa: produto.justificativa })
+        this.setState({
+            incluindo: false,
+            alterando: true,
+            exibindo: false,
+            id: produto.id,
+            nome: produto.nome,
+            descricao: produto.descricao,
+            categoriaId: produto.categoriaId,
+            aprovado: produto.aprovado,
+            disponibilidade: produto.disponibilidade,
+            justificativa: produto.justificativa,
+        })
     }
     iniciarExibir = () => {
         this.setState({ incluindo: false, alterando: false, exibindo: true })
@@ -50,9 +72,11 @@ export default class Produto extends Component {
     preencherLista = () => {
         const url = 'http://localhost:8080/produtos/'
         fetch(url)
-            .then(response => response.json().then(data => {
-                this.setState({ produtos: data })
-            }))
+            .then(response =>
+                response.json().then(data => {
+                    this.setState({ produtos: data })
+                })
+            )
             .catch(erro => console.log(erro))
 
     }
@@ -65,9 +89,11 @@ export default class Produto extends Component {
     carregarCategorias = () => {
         const url = 'http://localhost:8080/categorias/'
         fetch(url)
-            .then(response => response.json().then(data => {
-                this.setState({ categorias: data });
-            }))
+            .then(response =>
+                response.json().then(data => {
+                    this.setState({ categorias: data });
+                })
+            )
             .catch(erro => console.log(erro))
 
     }
@@ -169,23 +195,61 @@ export default class Produto extends Component {
                                     <div className="col-2">{produto.categoria.nome}</div>
                                     <div className="col-2">{produto.disponibilidade ? "SIM" : "NÃO"}</div>
                                     <div className="col-2 btn-group" role="group" aria-label="Basic radio toggle button group" >
-                                        <input type="radio" className="btn-check" name="aprovacao" id="btnradio1Aprov" autoComplete="off" value={this.state.aprovado} />
-                                        <label className="btn btn-outline-primary" htmlFor="btnradio1Aprov" >sim</label>
+                                        <input
+                                            type="radio"
+                                            className="btn-check"
+                                            name="aprovacao"
+                                            id="btnradio1Aprov"
+                                            autoComplete="off"
+                                            value={this.state.aprovado}
+                                        />
+                                        <label
+                                            className="btn btn-outline-primary"
+                                            htmlFor="btnradio1Aprov"
+                                        >sim</label>
 
-                                        <input type="radio" className="btn-check" name="aprovacao" id="btnradio2Aprov" value={this.state.aprovado} autoComplete="off" />
-                                        <label className="btn btn-outline-primary" htmlFor="btnradio2Aprov">Não</label>
+                                        <input
+                                            type="radio"
+                                            className="btn-check"
+                                            name="aprovacao"
+                                            id="btnradio2Aprov"
+                                            value={this.state.aprovado}
+                                            autoComplete="off"
+                                        />
+                                        <label
+                                            className="btn btn-outline-primary"
+                                            htmlFor="btnradio2Aprov"
+                                        >Não</label>
                                     </div>
                                     {/*<div className="col ms-5 ps-5">{produto.aprovado? "SIM" : "NÃO"}</div>*/}
 
                                     <div className="col btn-group">
-                                        <button type="button" className="btn btn-outline-primary" onClick={() => this.iniciarAlterar(produto)}>Alterar</button>
-                                        <button type="button" className="btn btn-outline-danger" onClick={() => this.excluir(produto)}>Excluir</button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-primary"
+                                            onClick={() => this.iniciarAlterar(produto)}
+                                        >
+                                            Alterar
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn btn-outline-danger"
+                                            onClick={() => this.excluir(produto)}
+                                        >
+                                            Excluir
+                                        </button>
                                     </div>
                                 </div>
                             </li>
                         })}
                     </ul>
-                    <button type="button" className="btn col-2  btn-outline-primary btn-sm" onClick={() => this.iniciarNovo()}>Novo produto</button>
+                    <button
+                        type="button"
+                        className="btn col-2  btn-outline-primary btn-sm"
+                        onClick={() => this.iniciarNovo()}
+                    >
+                        Novo produto
+                    </button>
                 </div>
             </div>
         )
@@ -197,45 +261,79 @@ export default class Produto extends Component {
                     <h2 className="m-auto">Cadastro de produtos</h2>
                     <form>
                         <div className="form-group pb-2 ">
-                            <label type="text" className="col-sm-2 ">Nome do produto</label>
-                            <input value={this.state.nome} onChange={this.txtnomeChange} className="form-control-sm mx-3 col-sm-3" placeholder="Nome" />
+                            <label type="text" className="col-sm-2 ">
+                                Nome do produto
+                            </label>
+                            <input
+                                value={this.state.nome}
+                                onChange={this.txtnomeChange}
+                                className="form-control-sm mx-3 col-sm-3"
+                                placeholder="Nome"
+                            />
                         </div>
                         <div className="form-group pb-2">
                             <label className="col-sm-2" >Categoria</label>
-                            <select className="form-select-lg mx-3 col-sm-2" onChange={this.cbocatChange} >
-                                <option disabled value="">---</option>
+                            <select
+                                className="form-select-lg mx-3 col-sm-2"
+                                onChange={this.cbocatChange}
+                            >
+                                <option disabled value="">
+                                    ---
+                                </option>
                                 {this.state.categorias.map((categoria) => (
-                                    <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
+                                    <option key={categoria.id} value={categoria.id}>
+                                        {categoria.nome}
+                                    </option>
                                 ))}
 
                             </select>
                         </div>
                         {/* <label className="pe-2 ">Aprovado</label>
-                        <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                            <input type="radio" className="btn-check" name="aprovacao" id="btnradio1Aprov" autoComplete="off" value={this.state.aprovado}  />
-                            <label className="btn btn-outline-primary" for="btnradio1Aprov">sim</label>
+                                <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                    <input type="radio" className="btn-check" name="aprovacao" id="btnradio1Aprov" autoComplete="off" value={this.state.aprovado}  />
+                                    <label className="btn btn-outline-primary" for="btnradio1Aprov">sim</label>
 
-                            <input type="radio" className="btn-check" name="aprovacao" id="btnradio2Aprov" value={this.state.aprovado} autoComplete="off" defaultChecked/>
-                            <label className="btn btn-outline-primary" for="btnradio2Aprov">Não</label>
-                        </div>
+                                    <input type="radio" className="btn-check" name="aprovacao" id="btnradio2Aprov" value={this.state.aprovado} autoComplete="off" defaultChecked/>
+                                    <label className="btn btn-outline-primary" for="btnradio2Aprov">Não</label>
+                                </div>
 
-                        <label className="pe-2 ps-5">Disponibilidade</label>
-                        <div className="btn-group pb-2" role="group" aria-label="Basic radio toggle button group ">
-                            <input type="radio" className="btn-check" name="btnradio" id="btnradio1Dispo" value={this.state.disponibilidade} autoComplete="off" />
-                            <label className="btn btn-outline-primary" for="btnradio1Dispo">sim</label>
+                                <label className="pe-2 ps-5">Disponibilidade</label>
+                                <div className="btn-group pb-2" role="group" aria-label="Basic radio toggle button group ">
+                                    <input type="radio" className="btn-check" name="btnradio" id="btnradio1Dispo" value={this.state.disponibilidade} autoComplete="off" />
+                                    <label className="btn btn-outline-primary" for="btnradio1Dispo">sim</label>
 
-                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2Dispo" value={this.state.disponibilidade} autoComplete="off" defaultChecked/>
-                            <label className="btn btn-outline-primary" for="btnradio2Dispo">Não</label>
-                                        (event) => { event.preventDefault(); this.gravarNovo() }
+                                    <input type="radio" className="btn-check" name="btnradio" id="btnradio2Dispo" value={this.state.disponibilidade} autoComplete="off" defaultChecked/>
+                                    <label 
+                                    className="btn btn-outline-primary" 
+                                    for="btnradio2Dispo"
+                                    >Não</label>
+                                                (event) => { event.preventDefault(); this.gravarNovo() }
                         </div>*/}
 
                         <div className="form-group pb-1 ">
                             <label className="col-sm-2" >Descrição</label>
-                            <textarea value={this.state.descricao} onChange={this.txtDescChange} className="form-control-sm mx-3 pe-5 pb-2" placeholder="Descreva o produto" />
+                            <textarea
+                                value={this.state.descricao}
+                                onChange={this.txtDescChange}
+                                className="form-control-sm mx-3 pe-5 pb-2"
+                                placeholder="Descreva o produto"
+                            />
                         </div>
 
-                        <button type="submit" className="btn btn-primary px-5" onClick={this.state.incluindo ? () => this.gravarNovo() : () => this.gravarAlterar()}>Enviar</button>
-                        <button type="button" className="btn col-2 btn-outline-primary btn-sm" onClick={() => this.iniciarExibir()}>Mostrar lista de produtos</button>
+                        <button
+                            type="submit"
+                            className="btn btn-primary px-5"
+                            onClick={this.state.incluindo ? () => this.gravarNovo() : () => this.gravarAlterar()}
+                        >
+                            Enviar
+                        </button>
+                        <button
+                            type="button"
+                            className="btn col-2 btn-outline-primary btn-sm"
+                            onClick={() => this.iniciarExibir()}
+                        >
+                            Mostrar lista de produtos
+                        </button>
                     </form>
 
                 </div>
@@ -258,5 +356,4 @@ export default class Produto extends Component {
         }
         return pagina
     }
-
 }

@@ -20,9 +20,11 @@ export default class Categoria extends Component {
     preencherLista = () => {
         const url = window.servidor + '/categorias/'
         fetch(url)
-            .then(response => response.json().then(data => {
-                this.setState({ categorias: data })
-            }))
+            .then(response =>
+                response.json().then(data => {
+                    this.setState({ categorias: data })
+                })
+            )
     }
 
     componentDidMount() {
@@ -33,7 +35,12 @@ export default class Categoria extends Component {
         this.setState({ incluindo: true, nome: '' })
     }
     iniciarAlterar = (categoria) => {
-        this.setState({ incluindo: false, alterando: true, id: categoria.id, nome: categoria.nome })
+        this.setState({
+            incluindo: false,
+            alterando: true,
+            id: categoria.id,
+            nome: categoria.nome,
+        })
     }
 
     gravarNovo = () => {
@@ -112,24 +119,44 @@ export default class Categoria extends Component {
                     </table>
 
                     <ul className="list-group overflow-auto ">
-                        {this.state.categorias && this.state.categorias.map(categoria => {
-                            return <li className="list-group-item " key={categoria.id}>
-                                <div className="row">
-                                    <div className="col-sm-4 ml-5">{categoria.id}</div>
-                                    <div className="col-sm-2 mr-5">{categoria.nome}</div>
-                                    <button type="button" className="btn col-2 mx-5 btn-outline-primary btn-block " onClick={() => this.iniciarAlterar(categoria)}>ALTERAR</button>
-                                    <button type="button" className="btn col-2  btn-outline-danger btn-sm" onClick={() => this.excluir(categoria)}>EXCLUIR</button>
-                                </div>
-                            </li>
-                        })}
+                        {this.state.categorias &&
+                            this.state.categorias.map(categoria => {
+                                return <li className="list-group-item " key={categoria.id}>
+                                    <div className="row">
+                                        <div className="col-sm-4 ml-5">{categoria.id}</div>
+                                        <div className="col-sm-2 mr-5">{categoria.nome}</div>
+                                        <button
+                                            type="button"
+                                            className="btn col-2 mx-5 btn-outline-primary btn-block "
+                                            onClick={() => this.iniciarAlterar(categoria)}>ALTERAR</button>
+                                        <button
+                                            type="button"
+                                            className="btn col-2  btn-outline-danger btn-sm"
+                                            onClick={() => this.excluir(categoria)}
+                                        >
+                                            EXCLUIR
+                                        </button>
+                                    </div>
+                                </li>
+                            })}
                     </ul>
-
                 </div>
                 <div className="container-sm ">
                     <h2 className="d-inline m-auto ">Cadastrar categorias</h2>
                     <form className="row flex px-5">
-                        <input value={this.state.nome} onChange={this.txtNome_change} type="text" className="col-lg form-control-lg" placeholder="Nome" />
-                        <button type="button" className="btn col-sm mx-5 btn-outline-primary btn-sm" onClick={() => this.gravarNovo()}>SALVAR</button>
+                        <input
+                            value={this.state.nome}
+                            onChange={this.txtNome_change}
+                            type="text" className="col-lg form-control-lg"
+                            placeholder="Nome"
+                        />
+                        <button
+                            type="button"
+                            className="btn col-sm mx-5 btn-outline-primary btn-sm"
+                            onClick={() => this.gravarNovo()}
+                        >
+                            SALVAR
+                        </button>
                     </form>
 
                 </div>
@@ -154,27 +181,57 @@ export default class Categoria extends Component {
                     </table>
 
                     <ul className="list-group overflow-auto ">
-                        {this.state.categorias && this.state.categorias.map(categoria => {
-                            return <li className="list-group-item " key={categoria.id}>
-                                <div className="row">
-                                    <div className="col-sm-4 ml-5">{categoria.id}</div>
-                                    <div className="col-sm-2 mr-5">{categoria.nome}</div>
-                                    <button type="button" className="btn col-2 mx-5 btn-outline-primary btn-block " onClick={() => this.iniciarAlterar(categoria)}>ALTERAR</button>
-                                    <button type="button" className="btn col-2  btn-outline-danger btn-sm" onClick={() => this.excluir(categoria)}>EXCLUIR</button>
-                                </div>
-                            </li>
-                        })}
+                        {this.state.categorias &&
+                            this.state.categorias.map(categoria => {
+                                return <li className="list-group-item " key={categoria.id}>
+                                    <div className="row">
+                                        <div className="col-sm-4 ml-5">{categoria.id}</div>
+                                        <div className="col-sm-2 mr-5">{categoria.nome}</div>
+                                        <button
+                                            type="button"
+                                            className="btn col-2 mx-5 btn-outline-primary btn-block "
+                                            onClick={() => this.iniciarAlterar(categoria)}
+                                        >
+                                            ALTERAR
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="btn col-2  btn-outline-danger btn-sm"
+                                            onClick={() => this.excluir(categoria)}
+                                        >
+                                            EXCLUIR
+                                        </button>
+                                    </div>
+                                </li>
+                            })}
                     </ul>
 
                 </div>
                 <div className="container-sm ">
                     <h2 className="d-inline m-auto ">Cadastrar categorias</h2>
                     <form className="row flex px-5 ">
-                        <input value={this.state.nome} onChange={this.txtNome_change} type="text" className="col-lg form-control-lg" placeholder="Nome" />
-                        <button type="button" className="btn col-sm mx-5 btn-outline-primary btn-sm" onClick={() => this.gravarAlterar()}>SALVAR</button>
-                        <button type="button" className="btn col-sm btn-outline-secondary btn-sm" onClick={() => this.iniciarNovo()}>DESFAZER</button>
+                        <input
+                            value={this.state.nome}
+                            onChange={this.txtNome_change}
+                            type="text"
+                            className="col-lg form-control-lg"
+                            placeholder="Nome"
+                        />
+                        <button
+                            type="button"
+                            className="btn col-sm mx-5 btn-outline-primary btn-sm"
+                            onClick={() => this.gravarAlterar()}
+                        >
+                            SALVAR
+                        </button>
+                        <button
+                            type="button"
+                            className="btn col-sm btn-outline-secondary btn-sm"
+                            onClick={() => this.iniciarNovo()}
+                        >
+                            DESFAZER
+                        </button>
                     </form>
-
                 </div>
             </div>
         )
