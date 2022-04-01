@@ -70,7 +70,7 @@ export default class Produto extends Component {
     }
 
     preencherLista = () => {
-        const url = 'http://localhost:8080/produtos/'
+        const url = window.servidor + '/produtos/'
         fetch(url)
             .then(response =>
                 response.json().then(data => {
@@ -87,7 +87,7 @@ export default class Produto extends Component {
     }
 
     carregarCategorias = () => {
-        const url = 'http://localhost:8080/categorias/'
+        const url = window.servidor + '/categorias/'
         fetch(url)
             .then(response =>
                 response.json().then(data => {
@@ -160,7 +160,6 @@ export default class Produto extends Component {
             }
         };
         const url = window.servidor + "/produtos/" + produto.id
-        //const url = "http://localhost:8080" + "/produtos/" + produto.id
         fetch(url, requestOptions)
             .then(resp => {
                 console.log("deletado");
