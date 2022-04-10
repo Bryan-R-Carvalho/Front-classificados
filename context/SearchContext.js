@@ -5,13 +5,11 @@ export const SearchContext = createContext({});
 export const SearchProvider = ({ children }) => {
   const [item, setItem] = useState([]);
   const search = useCallback(async (products) => {
-    console.log(products);
     const response = await fetch(
       `https://fakestoreapi.com/products/category/${products}`
     );
     const data = await response.json();
     setItem(data);
-    console.log(data);
     return data;
   }, []);
 

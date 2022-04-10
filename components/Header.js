@@ -7,26 +7,26 @@ import { SearchContext } from "../context/SearchContext";
 
 function Header() {
   const { data: session, status } = useSession();
-  const [item, setItem] = useState("");
+  const [query, setQuery] = useState("");
   const loading = status === "loading";
   const router = useRouter();
   const { search } = useContext(SearchContext);
 
   const handleChange = useCallback(
     (e) => {
-      setItem(e.target.value);
+      setQuery(e.target.value);
       if (e.key === "Enter") {
-        handleSearch(item);
+        handleSearch(query);
       }
     },
-    [setItem]
+    [setQuery]
   );
 
   const handleSearch = useCallback(
-    async (item) => {
-      if (item) {
-        await search(item);
-        router.push("/buscar");
+    async (query) => {
+      if (query) {
+        await search(query);
+        router.push(`/search/${query}`);
       }
     },
     [search, router]
@@ -53,7 +53,10 @@ function Header() {
             className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4"
             type="text"
           />
-          <SearchIcon onClick={() => handleSearch(item)} className="h-12 p-4" />
+          <SearchIcon
+            onClick={() => handleSearch(query)}
+            className="h-12 p-4"
+          />
         </div>
         <div className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap">
           <div

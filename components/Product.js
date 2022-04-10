@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
-import Currency from "react-currency-formatter";
 import { useRouter } from "next/router";
+import Currency from "react-currency-formatter";
 import { TruckIcon } from "@heroicons/react/outline";
 
 function Product({ id, title, price, description, category, image }) {
@@ -10,7 +10,12 @@ function Product({ id, title, price, description, category, image }) {
 
   return (
     <div
-      onClick={() => router.push("/")}
+      onClick={() =>
+        router.push({
+          pathname: `/classificado/${id}`,
+          query: { id, title, price, description, category, image, delivery },
+        })
+      }
       className="relative flex flex-col m-5 bg-white z-30 p-10 cursor-pointer"
     >
       <p className="absolute top-2 right-2 text-xs italic text-gray-400">
