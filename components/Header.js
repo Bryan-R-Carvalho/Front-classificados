@@ -1,12 +1,36 @@
 import Image from "next/image";
 import { MenuIcon, SearchIcon, UserIcon } from "@heroicons/react/outline";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useCallback, useContext, useState } from "react";
+import { SearchContext } from "../context/SearchContext";
 
 function Header() {
   const { data: session, status } = useSession();
+  const [item, setItem] = useState("");
   const loading = status === "loading";
   const router = useRouter();
+  const { search } = useContext(SearchContext);
+
+  const handleChange = useCallback(
+    (e) => {
+      setItem(e.target.value);
+      if (e.key === "Enter") {
+        handleSearch(item);
+      }
+    },
+    [setItem]
+  );
+
+  const handleSearch = useCallback(
+    async (item) => {
+      if (item) {
+        await search(item);
+        router.push("/buscar");
+      }
+    },
+    [search, router]
+  );
 
   return (
     <header>
@@ -23,10 +47,13 @@ function Header() {
         </div>
         <div className="hidden sm:flex items-center h-10 rounded-md flex-grow cursor-pointer bg-yellow-400 hover:bg-yellow-500">
           <input
+            onKeyUp={(e) => {
+              handleChange(e);
+            }}
             className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4"
             type="text"
           />
-          <SearchIcon className="h-12 p-4" />
+          <SearchIcon onClick={() => handleSearch(item)} className="h-12 p-4" />
         </div>
         <div className="text-white flex items-center text-xs space-x-6 mx-6 whitespace-nowrap">
           <div
