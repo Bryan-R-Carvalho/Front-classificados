@@ -1,9 +1,6 @@
-import Image from "next/image";
 import Header from "../../components/Header";
 import SearchProduct from "../../components/SearchProduct";
 import { useContext } from "react";
-import Currency from "react-currency-formatter";
-import { TruckIcon } from "@heroicons/react/outline";
 import { useRouter } from "next/router";
 import { SearchContext } from "../../context/SearchContext";
 
@@ -11,7 +8,7 @@ export default function Buscar() {
   const { item } = useContext(SearchContext);
   const router = useRouter();
   return (
-    <div className="bg-gray-100">
+    <div className="w-full bg-gray-100">
       <Header />
       <main className="lg:flex max-w-screen-2xl mx-auto">
         <div className="flex-grow m-5 shadow-sm">

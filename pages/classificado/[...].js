@@ -12,13 +12,13 @@ export default function Classificado(products) {
   );
 
   return (
-    <div className="bg-gray-100">
+    <div className="w-full h-full bg-gray-100">
       <Head>
         <title>Classificados</title>
       </Head>
       <Header />
       <main className="max-w-screen-2xl mx-auto">
-        <div className="relative flex flex-col m-5 bg-white z-30 p-10">
+        <div className="relative flex flex-col m-5 bg-white z-30 p-10 rounded-sm">
           <p className="absolute top-2 right-2 text-xs italic text-gray-400">
             {product.category}
           </p>
