@@ -5,6 +5,7 @@ import Cadastrar from './pages/cadastrar/CadastrarFornecedor';
 import Fornecedor from './pages/fornecedor/Fornecedor';
 import AprovarFornecedor from './pages/aprovar/Aprovar';
 import Usuario  from './pages/usuario/Usuario';
+import BuscarProduto  from './pages/buscarProduto/BuscarProduto';
 
 export default function Routes() {
   return (
@@ -17,6 +18,7 @@ export default function Routes() {
         <Route path="/fornecedor" component={Fornecedor} />
         <Route path="/aprovar" component={AprovarFornecedor} />
         <Route path="/usuario" component={Usuario}/>
+        <Route path="/buscar_produto" component={BuscarProduto}/>
       </Switch>
     </BrowserRouter>
   )
