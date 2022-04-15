@@ -46,7 +46,7 @@ export default class BuscarProduto extends Component {
 
                     <div>
                         <div className="p-1">
-                            <input required value={this.state.nome} onChange={this.txtnome_change} className="form-control" placeholder="Nome Produto" type="text"></input>
+                            <input required value={this.state.nome} onChange={this.txtNome_change} className="form-control" placeholder="Nome Produto" type="text"></input>
                         </div>
                     </div>
 
@@ -65,8 +65,6 @@ export default class BuscarProduto extends Component {
                     })}
                 </div>
             </div>
-
-
         )
     }
 
