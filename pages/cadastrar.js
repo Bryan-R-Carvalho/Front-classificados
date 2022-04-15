@@ -25,7 +25,7 @@ export default function Cadastrar() {
       try {
         const response = await api.post("/fornecedor/", JSON.stringify(data));
         console.log(response);
-        if (response.status === 201) {
+        if (response.status === 200) {
           addToast({
             type: "success",
             title: "Cadastro realizado com sucesso!",
