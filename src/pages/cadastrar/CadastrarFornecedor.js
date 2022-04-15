@@ -13,11 +13,24 @@ export default function Cadastrar() {
   const [site, setSite] = useState('');
   const [instagram, setInstagram] = useState('');
   const [endereco, setEndereco] = useState('');
+  const [cep, setCep] = useState('');
   const [delivery, setDelivery] = useState(false);
   const [senha, setSenha] = useState('');
   const [confsenha, setConfSenha] = useState('');
 
   const history = useHistory();
+
+  function BuscaEndereco(){
+    var endereco_retorno = "'";
+    fetch("https://viacep.com.br/ws/"+cep+"/json/")
+    .then(res => res.json())
+    .then(res => {
+      endereco_retorno = res.logradouro + ' - ' + res.bairro + ' - ' + res.localidade + '/' + res.uf
+    })
+    .then(r => {
+      setEndereco(endereco_retorno)
+    })
+  }
 
   async function Cadastrar(e) {
     e.preventDefault();
@@ -69,6 +82,9 @@ export default function Cadastrar() {
               </div>
               <div>
                 <input type="text" className="form-control" placeholder="Instagram" aria-label="Instagram" value={instagram} onChange={e => setInstagram(e.target.value)} required />
+              </div>
+              <div>
+                <input type="text" className="form-control" placeholder="CEP" onBlur={BuscaEndereco} value={cep} onChange={e => setCep(e.target.value)} required />
               </div>
               <div>
                 <input type="text" className="form-control" placeholder="Endereço" aria-label="Endereço" value={endereco} onChange={e => setEndereco(e.target.value)} required />
