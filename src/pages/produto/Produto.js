@@ -5,11 +5,11 @@ export default class Produto extends Component {
     state = {
         id: "",
         nome: "",
-        aprovado:false,
-        descricao:"",
-        disponibilidade:false,
-        justificativa:"",
-        categoriaId:"",
+        aprovado: false,
+        descricao: "",
+        disponibilidade: false,
+        justificativa: "",
+        categoriaId: "",
         produtos: [],
         produtosFiltro: [],
         categorias: [],
@@ -21,32 +21,32 @@ export default class Produto extends Component {
     }
 
     iniciarNovo = () => {
-        this.setState({incluindo: true, alterando: false, exibindo: false, nome: '', descricao: '', categoria: 1, aprovado: false, disponibilidade: false, justificativa: ''})
+        this.setState({ incluindo: true, alterando: false, exibindo: false, nome: '', descricao: '', categoria: 1, aprovado: false, disponibilidade: false, justificativa: '' })
     }
     iniciarAlterar = (produto) => {
-        this.setState({incluindo: false, alterando: true, exibindo: false, id:produto.id, nome: produto.nome, descricao: produto.descricao, categoriaId: produto.categoria_id, aprovado:produto.aprovado, disponibilidade:produto.disponibilidade, justificativa:produto.justificativa})
+        this.setState({ incluindo: false, alterando: true, exibindo: false, id: produto.id, nome: produto.nome, descricao: produto.descricao, categoriaId: produto.categoriaId, aprovado: produto.aprovado, disponibilidade: produto.disponibilidade, justificativa: produto.justificativa })
     }
     iniciarExibir = () => {
-        this.setState({incluindo: false, alterando: false, exibindo: true})
+        this.setState({ incluindo: false, alterando: false, exibindo: true })
     }
 
-    txtnomeChange = (event) =>{
-        this.setState({nome: event.target.value})
+    txtnomeChange = (event) => {
+        this.setState({ nome: event.target.value })
     }
     cbocatChange = (event) =>{
         this.setState({categoriaId: event.target.value})
     }
-    comboAprovadoChange = (event) =>{
-        this.setState({aprovado: event.target.value})
+    comboAprovadoChange = (event) => {
+        this.setState({ aprovado: event.target.value })
     }
-    comboDispChange = (event) =>{
-        this.setState({disponibilidade: event.target.value})
+    comboDispChange = (event) => {
+        this.setState({ disponibilidade: event.target.value })
     }
-    txtDescChange = (event) =>{
-        this.setState({descricao: event.target.value})
+    txtDescChange = (event) => {
+        this.setState({ descricao: event.target.value })
     }
-    txtJustChange = (event) =>{
-        this.setState({justificativa: event.target.value})
+    txtJustChange = (event) => {
+        this.setState({ justificativa: event.target.value })
     }
     txtFiltroChange = event => {
         this.setState({filtro: event.target.value})
@@ -55,37 +55,37 @@ export default class Produto extends Component {
     preencherLista = () => {
         const url = 'http://localhost:8080/produtos/'
         fetch(url)
-        .then(response => response.json().then(data => {
-            this.setState({produtos: data})
-        }))
-        .catch(erro => console.log(erro))        
-             
+            .then(response => response.json().then(data => {
+                this.setState({ produtos: data })
+            }))
+            .catch(erro => console.log(erro))
+
     }
 
     componentDidMount = () => {
         this.preencherLista();
         this.carregarCategorias();
     }
-    
+
     carregarCategorias = () => {
         const url = 'http://localhost:8080/categorias/'
         fetch(url)
-        .then(response => response.json().then(data => {
-            this.setState({categorias: data});
-        }))
-        .catch(erro => console.log(erro))  
-      
-    }
-    
-    gravarNovo = () => {
-        const dados = {
+            .then(response => response.json().then(data => {
+                this.setState({ categorias: data });
+            }))
+            .catch(erro => console.log(erro))
 
+    }
+
+    gravarNovo = () => {
+        //console.log(this.state)
+        const dados = {
             "nome": this.state.nome,
-            "aprovado":false,
-            "descricao":this.state.descricao,
-            "disponibilidade":false,
-            "justificativa":this.state.justificativa,
-            "categoria_id":this.state.categoriaId,
+            "aprovado": false,
+            "descricao": this.state.descricao,
+            "disponibilidade": false,
+            "justificativa": this.state.justificativa,
+            "categoriaId": this.state.categoriaId,
         }
         const requestOptions = {
             method: 'POST',
@@ -96,7 +96,7 @@ export default class Produto extends Component {
             body: JSON.stringify(dados)
         };
         const url = window.servidor + '/produtos/'
-        
+
         fetch(url, requestOptions)
             .then(fim => {
                 this.setState({incluindo: false});
@@ -105,7 +105,32 @@ export default class Produto extends Component {
             })
             .catch(erro => console.log(erro))
     }
-    
+
+    gravarAlterar = (categoria) => {
+        console.log(this.state)
+        const dados = {
+            "nome": this.state.nome,
+            "descricao": this.state.descricao,
+            "categoriaId": this.state.categoriaId,
+        }
+
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        };
+        const url = window.servidor + '/produtos/' + this.state.id;
+
+        fetch(url, requestOptions)
+            .then(resp => {
+                this.setState({ alterando: false, exibindo: true })
+                this.preencherLista()
+            })
+            .catch(erro => console.log(erro))
+    }
+
 
     excluir = (produto) => {
         const requestOptions = {
@@ -114,18 +139,18 @@ export default class Produto extends Component {
                 'Content-Type': 'application/json',
             }
         };
-        //const url = window.servidor + "/produtos/" + produto.id
-        const url = "http://localhost:8080" + "/produtos/" + produto.id
+        const url = window.servidor + "/produtos/" + produto.id
+        //const url = "http://localhost:8080" + "/produtos/" + produto.id
         fetch(url, requestOptions)
             .then(resp => {
                 console.log("deletado");
                 this.preencherLista();
             }).catch(erro => console.log(erro))
-            
+
     }
 
     renderExibirLista = () => {
-        return(
+        return (
             <div className="fundo container-fluid d-grid" >
                 <div className="container-xl d-grid bg-white h-75 w-100 p-auto ">
                     <h2 className="d-inline m-auto  ">Lista de produtos</h2>      
@@ -143,7 +168,7 @@ export default class Produto extends Component {
                             </tr>
                         </thead>
                     </table>
-                
+
                     <ul className="list-group overflow-auto">
                         {this.renderLista}
                     </ul> 
@@ -185,27 +210,25 @@ export default class Produto extends Component {
     }
     
     renderIncluir = () => {
-        return(
+        return (
             <div className="fundo container-fluid d-grid" >
                 <div className="container-xl d-grid bg-white p-auto">
                     <h2 className="m-auto">Cadastro de produtos</h2>
                     <form>
                         <div className="form-group pb-2 ">
-                            <label type="text" className="col-sm-2">Nome do produto</label>
-                            <input value={this.state.nome} onChange={this.txtnomeChange} className="form-control-sm mx-3 col-sm-3"  placeholder="Nome"/>
+                            <label type="text" className="col-sm-2 ">Nome do produto</label>
+                            <input value={this.state.nome} onChange={this.txtnomeChange} className="form-control-sm mx-3 col-sm-3" placeholder="Nome" />
                         </div>
-                        <div className="form-group  pb-2">
+                        <div className="form-group pb-2">
                             <label className="col-sm-2" >Categoria</label>
                                 <select value={this.state.categoriaId} className="form-select-lg mx-3 col-sm-2" onChange={this.cbocatChange} >
                                     {this.state.categorias.map((categoria) => (
                                         <option key={categoria.id} value={categoria.id}>{categoria.nome}</option>
                                 ))}
-                                
-                                </select>
-                        </div>
 
-                        <br/>
-                        <label className="pe-2 ">Aprovado</label>
+                            </select>
+                        </div>
+                        {/* <label className="pe-2 ">Aprovado</label>
                         <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
                             <input type="radio" className="btn-check" name="aprovacao" id="btnradio1Aprov" autoComplete="off" value={this.state.aprovado}  />
                             <label className="btn btn-outline-primary" for="btnradio1Aprov">sim</label>
@@ -221,11 +244,10 @@ export default class Produto extends Component {
 
                             <input type="radio" className="btn-check" name="btnradio" id="btnradio2Dispo" value={this.state.disponibilidade} autoComplete="off" defaultChecked/>
                             <label className="btn btn-outline-primary" for="btnradio2Dispo">Não</label>
+                                        (event) => { event.preventDefault(); this.gravarNovo() }
+                        </div>*/}
 
-                        </div>
-                        <br/>
-                    
-                        <div className="form-group pb-2 ">
+                        <div className="form-group pb-1 ">
                             <label className="col-sm-2" >Descrição</label>
                             <textarea className="form-control-sm mx-3 pe-5 pb-2"  value={this.state.descricao} onChange={this.txtDescChange} placeholder="Descreva o produto"/>
                         </div>
@@ -236,26 +258,26 @@ export default class Produto extends Component {
                         <button type="button" className="btn btn-primary px-5" onClick={() => this.gravarNovo()}>Enviar</button>
                         <button type="button"  className="btn col-2 btn-outline-primary btn-sm" onClick={() => this.iniciarExibir()}>Mostrar lista de produtos</button>
                     </form>
-                    
+
                 </div>
             </div>
         )
     }
     render() {
         let pagina = ''
-        
-        if(this.state.incluindo){
+
+        if (this.state.incluindo) {
             pagina = this.renderIncluir()
-        }else{
-            if (this.state.exibindo){
+        } else {
+            if (this.state.exibindo) {
                 pagina = this.renderExibirLista()
-            }else{
-                if(this.state.alterando){
+            } else {
+                if (this.state.alterando) {
                     pagina = this.renderIncluir()
                 }
             }
         }
         return pagina
     }
-   
+
 }
