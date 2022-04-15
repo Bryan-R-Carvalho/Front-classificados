@@ -3,13 +3,27 @@ import { useRouter } from "next/router";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { signIn, getCsrfToken } from "next-auth/react";
+import { useToast } from "../context/ToastContext";
+import api from "./api/api";
 
 export default function Login({ csrfToken }) {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
+  const { addToast } = useToast();
 
-  function handleLogin(data) {
-    signIn("credentials", data);
+  async function handleLogin(data) {
+    try {
+      const response = await api.post(
+        "/usuario/sessions",
+        JSON.stringify(data)
+      );
+      signIn("credentials", data);
+    } catch (error) {
+      addToast({
+        type: "alert",
+        title: "Usuário ou senha inválidos",
+      });
+    }
   }
 
   return (

@@ -1,34 +1,54 @@
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useCallback } from "react";
 import Link from "next/link";
 import api from "./api/api";
 import { signIn, getCsrfToken } from "next-auth/react";
+import { useToast } from "../context/ToastContext";
 
 export default function Cadastrar() {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
+  const { addToast } = useToast();
 
-  async function handleSignUp(register) {
-    register.telefone = register.telefone.replace(/\D/g, "");
-    register.whatsapp = register.whatsapp.replace(/\D/g, "");
-    register.usuario = {
-      login: register.email,
-      senha: register.senha,
-      nome: register.nome,
-      tipoUsuario: "fornecedor",
-    };
-
-    console.log(register);
-
-    try {
-      const response = await api.post("/fornecedor/", JSON.stringify(register));
-      console.log(response);
-      signIn("credentials", register.usuario);
-    } catch (err) {
-      alert("Usuário já existe.");
-    }
-  }
+  const handleSignUp = useCallback(
+    async (data) => {
+      console.log(data);
+      data.telefone = data.telefone.replace(/\D/g, "");
+      data.whatsapp = data.whatsapp.replace(/\D/g, "");
+      data.usuario = {
+        login: data.email,
+        senha: data.senha,
+        nome: data.nome,
+        tipoUsuario: "fornecedor",
+      };
+      try {
+        const response = await api.post("/fornecedor/", JSON.stringify(data));
+        console.log(response);
+        if (response.status === 201) {
+          addToast({
+            type: "success",
+            title: "Cadastro realizado com sucesso!",
+            description: "Agora você pode fazer login",
+          });
+          signIn("credentials", data.usuario);
+        } else {
+          addToast({
+            type: "error",
+            title: "Erro ao cadastrar",
+            description: "Tente novamente mais tarde",
+          });
+        }
+      } catch (err) {
+        addToast({
+          type: "error",
+          title: "Erro ao realizar o cadastro",
+          description: "Verifique seus dados e tente novamente",
+        });
+      }
+    },
+    [signIn, addToast]
+  );
 
   function formatPhoneNumber(e) {
     var phone = e.target.value
