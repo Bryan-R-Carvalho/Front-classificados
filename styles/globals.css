@@ -18,6 +18,9 @@
   .form-control {
     @apply appearance-none rounded-none relative block w-full px-3 py-2 my-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md rounded-b-md focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm;
   }
+  .form-select {
+    @apply block w-full px-3 py-1.5 text-base font-normal text-gray-500 bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-gray-500 focus:ring-gray-500 focus:outline-none;
+  }
   .alert {
     @apply bg-yellow-200 border border-yellow-300 text-yellow-700 w-96 relative pt-4 pr-8 pb-4 pl-4 m-2 rounded-xl shadow-sm flex;
   }
