@@ -1,7 +1,22 @@
 import Head from "next/head";
 import Header from "../../components/Header";
+import { useForm } from "react-hook-form";
+import { useCallback } from "react";
 
 export default function Anunciar({ categories }) {
+  const { register, handleSubmit } = useForm();
+
+  const handlePost = useCallback(async (data) => {
+    console.log(data);
+    try {
+      const response = await fetch("/produtos", JSON.stringify(data));
+      const json = await response.json();
+      console.log(json);
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return (
     <div className="min-h-full bg-gray-100">
       <Head>
@@ -13,26 +28,50 @@ export default function Anunciar({ categories }) {
           <h1 className="m-2 text-center text-3xl">
             O que você está anunciando?
           </h1>
-          <form className="mt-8 space-y-6">
+          <form
+            className="mt-8 space-y-6"
+            method="POST"
+            onSubmit={handleSubmit(handlePost)}
+          >
             <div>
               <input
+                {...register("nome")}
+                name="nome"
                 className="form-control"
                 type="text"
                 placeholder="Título"
+                required
               />
             </div>
             <div>
               <textarea
+                {...register("descricao")}
+                name="descricao"
                 className="form-control"
                 rows={5}
                 placeholder="Descrição"
+                required
               />
             </div>
             <div>
-              <input className="form-control" type="text" placeholder="Preço" />
+              <input
+                {...register("preco")}
+                name="preco"
+                className="form-control"
+                type="number"
+                min={0.0}
+                step={0.01}
+                placeholder="Preço"
+                required
+              />
             </div>
             <div>
-              <select className="form-select">
+              <select
+                {...register("categoria")}
+                name="categoria"
+                className="form-select"
+                required
+              >
                 <option selected>Selecione uma categoria</option>
                 {categories.map((category) => (
                   <option value={category}>{category}</option>
@@ -40,14 +79,19 @@ export default function Anunciar({ categories }) {
               </select>
             </div>
             <input
+              {...register("imagem")}
+              name="imagem"
               type="file"
-              className="form-control bg-white cursor-pointer"
-              name="file"
+              className="form-control bg-white file:cursor-pointer file:buttonHeader"
               accept="image/*"
+              required
               multiple
             />
             <div className="text-right">
-              <button className="font-extrabold mt-auto px-6 buttonHeader">
+              <button
+                className="font-extrabold mt-auto px-6 buttonHeader"
+                type="submit"
+              >
                 Anunciar
               </button>
             </div>

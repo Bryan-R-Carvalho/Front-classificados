@@ -13,7 +13,6 @@ export default function Cadastrar() {
 
   const handleSignUp = useCallback(
     async (data) => {
-      console.log(data);
       data.telefone = data.telefone.replace(/\D/g, "");
       data.whatsapp = data.whatsapp.replace(/\D/g, "");
       data.usuario = {
@@ -24,7 +23,6 @@ export default function Cadastrar() {
       };
       try {
         const response = await api.post("/fornecedor/", JSON.stringify(data));
-        console.log(response);
         if (response.status === 200) {
           addToast({
             type: "success",
