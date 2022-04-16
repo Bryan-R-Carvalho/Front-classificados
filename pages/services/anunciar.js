@@ -3,12 +3,12 @@ import Header from "../../components/Header";
 
 export default function Anunciar({ categories }) {
   return (
-    <div className="bg-gray-100">
+    <div className="min-h-full bg-gray-100">
       <Head>
         <title>Classificados</title>
       </Head>
       <Header />
-      <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <main className="max-w-md w-full space-y-8">
           <h1 className="m-2 text-center text-3xl">
             O que você está anunciando?
@@ -41,7 +41,7 @@ export default function Anunciar({ categories }) {
             </div>
             <input
               type="file"
-              className="form-control cursor-pointer"
+              className="form-control bg-white cursor-pointer"
               name="file"
               accept="image/*"
               multiple
