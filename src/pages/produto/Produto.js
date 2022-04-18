@@ -193,34 +193,7 @@ export default class Produto extends Component {
                                     <div className="col-2">{produto.nome}</div>
                                     <div className="col-2">{produto.categoria.nome}</div>
                                     <div className="col-2">{produto.disponibilidade ? "SIM" : "NÃO"}</div>
-                                    <div className="col-2 btn-group" role="group" aria-label="Basic radio toggle button group" >
-                                        <input
-                                            type="radio"
-                                            className="btn-check"
-                                            name="aprovacao"
-                                            id="btnradio1Aprov"
-                                            autoComplete="off"
-                                            value={this.state.aprovado}
-                                        />
-                                        <label
-                                            className="btn btn-outline-primary"
-                                            htmlFor="btnradio1Aprov"
-                                        >sim</label>
-
-                                        <input
-                                            type="radio"
-                                            className="btn-check"
-                                            name="aprovacao"
-                                            id="btnradio2Aprov"
-                                            value={this.state.aprovado}
-                                            autoComplete="off"
-                                        />
-                                        <label
-                                            className="btn btn-outline-primary"
-                                            htmlFor="btnradio2Aprov"
-                                        >Não</label>
-                                    </div>
-                                    {/*<div className="col ms-5 ps-5">{produto.aprovado? "SIM" : "NÃO"}</div>*/}
+                                    <div className="col-2">{produto.aprovado ? "SIM" : "NÃO"}</div>
 
                                     <div className="col btn-group">
                                         <button
@@ -275,6 +248,8 @@ export default class Produto extends Component {
                             <select
                                 className="form-select-lg mx-3 col-sm-2"
                                 onChange={this.cbocatChange}
+                                value={this.state.categoria.id}
+
                             >
                                 <option disabled value="">
                                     ---
@@ -287,27 +262,27 @@ export default class Produto extends Component {
 
                             </select>
                         </div>
-                        {/* <label className="pe-2 ">Aprovado</label>
-                                <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                    <input type="radio" className="btn-check" name="aprovacao" id="btnradio1Aprov" autoComplete="off" value={this.state.aprovado}  />
-                                    <label className="btn btn-outline-primary" for="btnradio1Aprov">sim</label>
+                        <label className="pe-2 ">Aprovado</label>
+                        <div className="btn-group" role="group" aria-label="Basic radio toggle button group">
+                            <input type="radio" className="btn-check" name="aprovacao" id="btnradio1Aprov" autoComplete="off" value={this.state.aprovado} />
+                            <label className="btn btn-outline-primary" for="btnradio1Aprov">sim</label>
 
-                                    <input type="radio" className="btn-check" name="aprovacao" id="btnradio2Aprov" value={this.state.aprovado} autoComplete="off" defaultChecked/>
-                                    <label className="btn btn-outline-primary" for="btnradio2Aprov">Não</label>
-                                </div>
+                            <input type="radio" className="btn-check" name="aprovacao" id="btnradio2Aprov" value={this.state.aprovado} autoComplete="off" defaultChecked />
+                            <label className="btn btn-outline-primary" for="btnradio2Aprov">Não</label>
+                        </div>
 
-                                <label className="pe-2 ps-5">Disponibilidade</label>
-                                <div className="btn-group pb-2" role="group" aria-label="Basic radio toggle button group ">
-                                    <input type="radio" className="btn-check" name="btnradio" id="btnradio1Dispo" value={this.state.disponibilidade} autoComplete="off" />
-                                    <label className="btn btn-outline-primary" for="btnradio1Dispo">sim</label>
+                        <label className="pe-2 ps-5">Disponibilidade</label>
+                        <div className="btn-group pb-2" role="group" aria-label="Basic radio toggle button group ">
+                            <input type="radio" className="btn-check" name="btnradio" id="btnradio1Dispo" value={this.state.disponibilidade} autoComplete="off" />
+                            <label className="btn btn-outline-primary" for="btnradio1Dispo">sim</label>
 
-                                    <input type="radio" className="btn-check" name="btnradio" id="btnradio2Dispo" value={this.state.disponibilidade} autoComplete="off" defaultChecked/>
-                                    <label 
-                                    className="btn btn-outline-primary" 
-                                    for="btnradio2Dispo"
-                                    >Não</label>
-                                                (event) => { event.preventDefault(); this.gravarNovo() }
-                        </div>*/}
+                            <input type="radio" className="btn-check" name="btnradio" id="btnradio2Dispo" value={this.state.disponibilidade} autoComplete="off" defaultChecked />
+                            <label
+                                className="btn btn-outline-primary"
+                                for="btnradio2Dispo"
+                            >Não</label>
+
+                        </div>
 
                         <div className="form-group pb-1 ">
                             <label className="col-sm-2" >Descrição</label>

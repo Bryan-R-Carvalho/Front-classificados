@@ -106,10 +106,9 @@ export default class Categoria extends Component {
 
             <div className="container-fluid">
 
-                <div className="container-xl pb-4 ">
-                    <h2 className="d-inline m-auto ">Lista de categorias</h2>
-                    <br />
-                    <table className="table ">
+                <div className="container-xl w-75 h-75 p-4">
+                    <h2 className="d-inline m-auto">Lista de categorias</h2>
+                    <table className="table  ">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -142,7 +141,7 @@ export default class Categoria extends Component {
                     </ul>
                 </div>
                 <div className="container-sm ">
-                    <h2 className="d-inline m-auto ">Cadastrar categorias</h2>
+                    <h2 className="d-inline  ">Cadastrar categorias</h2>
                     <form className="row flex px-5">
                         <input
                             value={this.state.nome}
