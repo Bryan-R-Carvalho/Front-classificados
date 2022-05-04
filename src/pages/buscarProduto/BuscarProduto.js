@@ -66,6 +66,7 @@ export default class BuscarProduto extends Component {
                 </div>
             </div>
         )
+        
     }
 
     render() {
