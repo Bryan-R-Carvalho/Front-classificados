@@ -80,7 +80,7 @@ function Header() {
             onClick={
               !session
                 ? () => router.push("/login")
-                : () => router.push("/services/anuncios")
+                : () => router.push("/fornecedor/painel")
             }
             className="link"
           >
@@ -90,7 +90,7 @@ function Header() {
             onClick={
               !session
                 ? () => router.push("/login")
-                : () => router.push("/services/anunciar")
+                : () => router.push("/fornecedor/anunciar")
             }
             className="font-extrabold mt-auto buttonHeader"
           >

@@ -6,7 +6,7 @@ import { useCallback } from "react";
 export default function Anunciar({ categories }) {
   const { register, handleSubmit } = useForm();
 
-  const handlePost = useCallback(async (data) => {
+  const handleAnnounce = useCallback(async (data) => {
     console.log(data);
     try {
       const response = await fetch("/produtos", JSON.stringify(data));
@@ -31,7 +31,7 @@ export default function Anunciar({ categories }) {
           <form
             className="mt-8 space-y-6"
             method="POST"
-            onSubmit={handleSubmit(handlePost)}
+            onSubmit={handleSubmit(handleAnnounce)}
           >
             <div>
               <input
