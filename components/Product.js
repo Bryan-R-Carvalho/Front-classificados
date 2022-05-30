@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Currency from "react-currency-formatter";
 import { TruckIcon } from "@heroicons/react/outline";
 
 function Product({ id, title, price, description, category, image }) {
@@ -30,11 +29,8 @@ function Product({ id, title, price, description, category, image }) {
       />
       <h4 className="my-3">{title}</h4>
       <p className="text-xs my-2 line-clamp-2">{description}</p>
-      <div className="mb-5">
-        <Currency quantity={price} currency="BRL" />
-      </div>
       {delivery && (
-        <div className="flex items-center space-x-2 -mt-5">
+        <div className="flex items-center space-x-2 mt-5">
           <TruckIcon className="w-7" />
           <p className="text-xs text-gray-500">Realiza entrega</p>
         </div>
