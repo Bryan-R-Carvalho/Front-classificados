@@ -39,6 +39,9 @@
   .inactiveClass {
     @apply border-transparent hover:text-yellow-400 hover:border-yellow-400 dark:hover:text-gray-300;
   }
+  .painel {
+    @apply p-4 bg-white rounded-lg dark:bg-gray-800 h-[40rem];
+  }
 }
 
 @layer base {

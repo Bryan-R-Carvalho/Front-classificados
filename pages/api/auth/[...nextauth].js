@@ -30,6 +30,7 @@ export default NextAuth({
     signIn: "/login",
     error: "/login",
   },
+  session: { jwt: true },
   callbacks: {
     async jwt({ token, account, user }) {
       // initial sign in
@@ -37,8 +38,7 @@ export default NextAuth({
         return {
           ...token,
           name: user.nome,
-          expiresIn: "1d",
-          tipoUsuario: user.tipoUsuario,
+          role: user.tipoUsuario,
         };
       }
       return token;
@@ -46,11 +46,12 @@ export default NextAuth({
     redirect({ baseUrl }) {
       return baseUrl;
     },
-  },
-  async session({ session, token, user }) {
-    session.user.accessToken = token.accessToken;
-    session.user.name = user.name;
 
-    return session;
+    async session({ session, token, user }) {
+      session.user.accessToken = token.accessToken;
+      session.user.name = token.name;
+      session.user.role = token.role;
+      return session;
+    },
   },
 });

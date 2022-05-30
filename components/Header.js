@@ -80,11 +80,19 @@ function Header() {
             onClick={
               !session
                 ? () => router.push("/login")
-                : () => router.push("/fornecedor/painel")
+                : () => {
+                    session.user.role === "administrador"
+                      ? router.push("/administrador/painel")
+                      : router.push("/fornecedor/painel");
+                  }
             }
             className="link"
           >
-            <p>Meus Anuncios</p>
+            {session && session.user.role === "administrador" ? (
+              <p>Painel</p>
+            ) : (
+              <p>Meus Anuncios</p>
+            )}
           </div>
           <button
             onClick={

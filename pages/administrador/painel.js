@@ -40,7 +40,7 @@ export default function Anuncios() {
                 role="tab"
                 onClick={() => handleClick(0)}
               >
-                Publicados ( 0 )
+                Aprovar Fornecedor ( 0 )
               </button>
             </li>
             <li class="mr-2" role="presentation">
@@ -53,7 +53,7 @@ export default function Anuncios() {
                 role="tab"
                 onClick={() => handleClick(1)}
               >
-                Aguardando Aprovação ( 0 )
+                Aprovar Produto ( 0 )
               </button>
             </li>
             <li class="mr-2" role="presentation">
@@ -66,7 +66,7 @@ export default function Anuncios() {
                 role="tab"
                 onClick={() => handleClick(2)}
               >
-                Inativos ( 0 )
+                Gerenciar Fornecedor ( 0 )
               </button>
             </li>
             <li role="presentation">
@@ -79,7 +79,7 @@ export default function Anuncios() {
                 role="tab"
                 onClick={() => handleClick(3)}
               >
-                Expirados ( 0 )
+                Gerenciar Produto ( 0 )
               </button>
             </li>
           </ul>
