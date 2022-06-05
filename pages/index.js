@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
 import Banner from "../components/Banner";
 import ProductFeed from "../components/ProductFeed";
+import Sidebar from "../components/Sidebar";
 
 export default function Home({ products }) {
   return (
@@ -10,8 +10,8 @@ export default function Home({ products }) {
       <Head>
         <title>Classificados</title>
       </Head>
-      <Sidebar />
       <Header />
+      <Sidebar />
       <main className="max-w-screen-2xl mx-auto">
         <Banner />
         <ProductFeed products={products} />

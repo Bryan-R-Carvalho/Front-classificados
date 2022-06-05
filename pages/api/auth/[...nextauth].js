@@ -17,9 +17,15 @@ export default NextAuth({
           "/usuario/sessions",
           JSON.stringify(credentials)
         );
-        const user = res.data;
+        let user = res.data;
         if (res.status === 200 && user) {
-          return user;
+          if (user.tipoUsuario === "fornecedor") {
+            const res = await api.get("/fornecedor/email=" + user.login);
+            user = res.data;
+            return user;
+          } else {
+            return user;
+          }
         }
         return null;
       },
@@ -37,7 +43,16 @@ export default NextAuth({
       if (account && user) {
         return {
           ...token,
+          fornecedorId: user.id,
           name: user.nome,
+          whatsapp: user.whatsapp,
+          telefone: user.telefone,
+          site: user.site,
+          endereco: user.endereco,
+          instagram: user.instagram,
+          delivery: user.delivery,
+          aprovado: user.aprovado,
+          usuarioId: user.usuarioId,
           role: user.tipoUsuario,
         };
       }
@@ -49,7 +64,16 @@ export default NextAuth({
 
     async session({ session, token, user }) {
       session.user.accessToken = token.accessToken;
+      session.user.fornecedorId = token.fornecedorId;
       session.user.name = token.name;
+      session.user.whatsapp = token.whatsapp;
+      session.user.telefone = token.telefone;
+      session.user.site = token.site;
+      session.user.endereco = token.endereco;
+      session.user.instagram = token.instagram;
+      session.user.delivery = token.delivery;
+      session.user.aprovado = token.aprovado;
+      session.user.usuarioId = token.usuarioId;
       session.user.role = token.role;
       return session;
     },

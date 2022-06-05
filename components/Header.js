@@ -4,6 +4,9 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useCallback, useContext, useState } from "react";
 import { SearchContext } from "../context/SearchContext";
+import { SidebarContext } from "../context/SidebarContext";
+import { useToast } from "../context/ToastContext";
+import Sidebar from "./Sidebar";
 
 function Header() {
   const { data: session, status } = useSession();
@@ -11,6 +14,8 @@ function Header() {
   const loading = status === "loading";
   const router = useRouter();
   const { search } = useContext(SearchContext);
+  const { open } = useContext(SidebarContext);
+  const { addToast } = useToast();
 
   const handleChange = useCallback(
     (e) => {
@@ -89,7 +94,7 @@ function Header() {
             className="link"
           >
             {session && session.user.role === "administrador" ? (
-              <p>Painel</p>
+              <p className="font-extrabold mt-auto buttonHeader">Painel</p>
             ) : (
               <p>Meus Anuncios</p>
             )}
@@ -98,20 +103,32 @@ function Header() {
             onClick={
               !session
                 ? () => router.push("/login")
-                : () => router.push("/fornecedor/anunciar")
+                : session.user.aprovado
+                ? () => router.push("/fornecedor/anunciar")
+                : () =>
+                    addToast({
+                      type: "alert",
+                      title: "Atenção",
+                      description: "Você precisa ser aprovado para anunciar",
+                    })
             }
-            className="font-extrabold mt-auto buttonHeader"
+            className={
+              session && session.user.role === "administrador"
+                ? " hidden"
+                : "font-extrabold mt-auto buttonHeader"
+            }
           >
             Anunciar
           </button>
         </div>
       </div>
       <div className="flex items-center space-x-3 p-2 pl-6 bg-amazon_blue-light text-white text-sm">
-        <p className="link flex items-center">
+        <p className="link flex items-center" onClick={() => open(true)}>
           <MenuIcon className="h-6 mr-1" />
           Menu
         </p>
       </div>
+      <Sidebar />
     </header>
   );
 }

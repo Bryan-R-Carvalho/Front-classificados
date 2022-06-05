@@ -2,7 +2,6 @@ import Image from "next/image";
 import Head from "next/head";
 import Header from "../../components/Header";
 import { useRouter } from "next/router";
-import Currency from "react-currency-formatter";
 import { TruckIcon } from "@heroicons/react/outline";
 
 export default function Classificado(products) {
@@ -31,9 +30,7 @@ export default function Classificado(products) {
           />
           <h4 className="my-3">{product.title}</h4>
           <p className="text-xs my-2">{product.description}</p>
-          <div className="mb-5">
-            <Currency quantity={product.price} currency="BRL" />
-          </div>
+          <div className="mb-5"></div>
           {router.query.delivery === "true" && (
             <div className="flex items-center space-x-2 -mt-5">
               <TruckIcon className="w-7" />

@@ -4,6 +4,8 @@ import { NextResponse } from "next/server";
 export default async function middleware(req, ev) {
   const token = await getToken({ req, secret: process.env.JWT_SECRET });
 
+  console.log(token.aprovado);
+
   if (token && token.role === "fornecedor") {
     return NextResponse.next();
   }
