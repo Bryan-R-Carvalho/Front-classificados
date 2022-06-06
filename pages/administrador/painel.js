@@ -27,14 +27,14 @@ export default function Anuncios({ categories }) {
             Meus Anúncios
           </h1>
         </div>
-        <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="mb-4 border-b border-gray-200 dark:border-gray-700">
           <ul
-            class="flex flex-wrap -mb-px text-sm font-medium text-center justify-center text-gray-500 dark:text-gray-400"
+            className="flex flex-wrap -mb-px text-sm font-medium text-center justify-center text-gray-500 dark:text-gray-400"
             role="tablist"
           >
-            <li class="mr-2" role="presentation">
+            <li className="mr-2" role="presentation">
               <button
-                class={
+                className={
                   "inline-block p-4 rounded-t-lg border-b-2" +
                   (active[0] ? " activeClass" : " inactiveClass")
                 }
@@ -45,9 +45,9 @@ export default function Anuncios({ categories }) {
                 Aprovar Fornecedor ( 0 )
               </button>
             </li>
-            <li class="mr-2" role="presentation">
+            <li className="mr-2" role="presentation">
               <button
-                class={
+                className={
                   "inline-block p-4 rounded-t-lg border-b-2" +
                   (active[1] ? " activeClass" : " inactiveClass")
                 }
@@ -58,9 +58,9 @@ export default function Anuncios({ categories }) {
                 Aprovar Produto ( 0 )
               </button>
             </li>
-            <li class="mr-2" role="presentation">
+            <li className="mr-2" role="presentation">
               <button
-                class={
+                className={
                   "inline-block p-4 rounded-t-lg border-b-2" +
                   (active[2] ? " activeClass" : " inactiveClass")
                 }
@@ -73,7 +73,7 @@ export default function Anuncios({ categories }) {
             </li>
             <li role="presentation">
               <button
-                class={
+                className={
                   "inline-block p-4 rounded-t-lg border-b-2" +
                   (active[3] ? " activeClass" : " inactiveClass")
                 }
@@ -87,23 +87,23 @@ export default function Anuncios({ categories }) {
           </ul>
         </div>
         <div>
-          <div class={"painel" + (active[0] ? "" : " hidden")}>
-            <p class="text-sm text-center text-gray-500 dark:text-gray-400">
+          <div className={"painel" + (active[0] ? "" : " hidden")}>
+            <p className="text-sm text-center text-gray-500 dark:text-gray-400">
               Ops, parece que não há nada aqui! :(
             </p>
           </div>
-          <div class={"painel" + (active[1] ? "" : " hidden")}>
-            <p class="text-sm text-center text-gray-500 dark:text-gray-400">
+          <div className={"painel" + (active[1] ? "" : " hidden")}>
+            <p className="text-sm text-center text-gray-500 dark:text-gray-400">
               Ops, parece que não há nada aqui! :(
             </p>
           </div>
-          <div class={"painel" + (active[2] ? "" : " hidden")}>
-            <p class="text-sm text-center text-gray-500 dark:text-gray-400">
+          <div className={"painel" + (active[2] ? "" : " hidden")}>
+            <p className="text-sm text-center text-gray-500 dark:text-gray-400">
               Ops, parece que não há nada aqui! :(
             </p>
           </div>
-          <div class={"painel" + (active[3] ? "" : " hidden")}>
-            <p class="text-sm text-center text-gray-500 dark:text-gray-400">
+          <div className={"painel" + (active[3] ? "" : " hidden")}>
+            <p className="text-sm text-center text-gray-500 dark:text-gray-400">
               Ops, parece que não há nada aqui! :(
             </p>
           </div>
