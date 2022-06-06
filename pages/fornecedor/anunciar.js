@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 import { useForm } from "react-hook-form";
 import { useCallback } from "react";
 
@@ -23,6 +24,7 @@ export default function Anunciar({ categories }) {
         <title>Classificados</title>
       </Head>
       <Header />
+      <Sidebar categories={categories} />
       <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <main className="max-w-md w-full space-y-8">
           <h1 className="m-2 text-center text-3xl">

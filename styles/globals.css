@@ -12,6 +12,9 @@
   .button {
     @apply p-2 text-xs md:text-sm bg-gradient-to-b from-yellow-200 to-yellow-400 border border-yellow-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-yellow-500 active:from-yellow-500;
   }
+  .buttonRemover {
+    @apply p-2 text-xs md:text-sm bg-gradient-to-b from-red-200 to-red-400 border border-red-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-500 active:from-red-500;
+  }
   .buttonHeader {
     @apply p-2 text-xs md:text-sm bg-gradient-to-b bg-yellow-400 hover:bg-yellow-500 rounded-md;
   }

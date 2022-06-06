@@ -1,16 +1,37 @@
-import { useContext } from "react";
+import { useCallback, useContext, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon, ArrowLeftIcon } from "@heroicons/react/solid";
 import { SidebarContext } from "../context/SidebarContext";
+import { SearchContext } from "../context/SearchContext";
 import { signOut } from "next-auth/react";
 
-function Sidebar() {
+export default function Sidebar({ categories }) {
   const { data: session, status } = useSession();
   const { isOpen, open } = useContext(SidebarContext);
   const loading = status === "loading";
+  const { search } = useContext(SearchContext);
   const router = useRouter();
+
+  const handleRouter = useCallback(
+    (path) => {
+      open(false);
+      router.push(path);
+    },
+    [router]
+  );
+
+  const handleSearch = useCallback(
+    async (category) => {
+      if (category) {
+        open(false);
+        await search(category);
+        router.push(`/search/${category}`);
+      }
+    },
+    [search, router]
+  );
 
   return (
     <div
@@ -42,15 +63,14 @@ function Sidebar() {
                   />
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  <div className="w-full px-4 py-2 rounded-lg cursor-base hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none">
-                    <span>teste</span>
-                  </div>
-                  <div className="w-full px-4 py-2 rounded-lg cursor-base hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none">
-                    <span>teste</span>
-                  </div>
-                  <div className="w-full px-4 py-2 rounded-lg cursor-base hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none">
-                    <span>teste</span>
-                  </div>
+                  {categories.map((category) => (
+                    <div
+                      className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none"
+                      onClick={() => handleSearch(category)}
+                    >
+                      <span>{category}</span>
+                    </div>
+                  ))}
                 </Disclosure.Panel>
               </>
             )}
@@ -59,14 +79,29 @@ function Sidebar() {
           <hr className="m-2" />
           {session && session.user.role === "administrador" ? (
             <div>
-              <div className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none">
+              <div
+                className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none"
+                onClick={() => handleRouter("/administrador/categorias")}
+              >
                 <span>Gerenciar Categoria</span>
               </div>
-              <div className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none">
+              <div
+                className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none"
+                onClick={() => handleRouter("/administrador/bairros")}
+              >
                 <span>Gerenciar Bairros</span>
               </div>
-              <div className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none">
+              <div
+                className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none"
+                onClick={() => handleRouter("/administrador/fornecedores")}
+              >
                 <span>Gerenciar Fornecedores</span>
+              </div>
+              <div
+                className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none"
+                onClick={() => handleRouter("/administrador/produtos")}
+              >
+                <span>Gerenciar Produtos</span>
               </div>
               <hr className="m-2" />
             </div>
@@ -99,5 +134,3 @@ function Sidebar() {
     </div>
   );
 }
-
-export default Sidebar;

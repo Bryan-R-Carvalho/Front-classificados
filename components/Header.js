@@ -6,7 +6,6 @@ import { useCallback, useContext, useState } from "react";
 import { SearchContext } from "../context/SearchContext";
 import { SidebarContext } from "../context/SidebarContext";
 import { useToast } from "../context/ToastContext";
-import Sidebar from "./Sidebar";
 
 function Header() {
   const { data: session, status } = useSession();
@@ -128,7 +127,6 @@ function Header() {
           Menu
         </p>
       </div>
-      <Sidebar />
     </header>
   );
 }

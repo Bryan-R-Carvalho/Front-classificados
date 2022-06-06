@@ -1,17 +1,17 @@
 import Head from "next/head";
 import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
 import Banner from "../components/Banner";
 import ProductFeed from "../components/ProductFeed";
-import Sidebar from "../components/Sidebar";
 
-export default function Home({ products }) {
+export default function Home({ products, categories }) {
   return (
     <div className="bg-gray-100">
       <Head>
         <title>Classificados</title>
       </Head>
       <Header />
-      <Sidebar />
+      <Sidebar categories={categories} />
       <main className="max-w-screen-2xl mx-auto">
         <Banner />
         <ProductFeed products={products} />
@@ -24,9 +24,13 @@ export async function getServerSideProps(context) {
   const products = await fetch("https://fakestoreapi.com/products").then(
     (res) => res.json()
   );
+  const categories = await fetch(
+    "https://fakestoreapi.com/products/categories"
+  ).then((res) => res.json());
   return {
     props: {
       products,
+      categories,
     },
   };
 }

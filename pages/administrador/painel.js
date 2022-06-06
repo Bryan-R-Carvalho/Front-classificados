@@ -1,8 +1,9 @@
 import Head from "next/head";
 import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
 
-export default function Anuncios() {
+export default function Anuncios({ categories }) {
   const [active, setActive] = useState([true, false, false, false]);
 
   const handleClick = (index) => {
@@ -19,6 +20,7 @@ export default function Anuncios() {
         <title>Classificados</title>
       </Head>
       <Header />
+      <Sidebar categories={categories} />
       <main className="max-w-screen-2xl mx-auto">
         <div className="m-5">
           <h1 className="text-4xl font-light m-0 p-0 box-border text-gray-600">
@@ -109,4 +111,15 @@ export default function Anuncios() {
       </main>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const categories = await fetch(
+    "https://fakestoreapi.com/products/categories"
+  ).then((res) => res.json());
+  return {
+    props: {
+      categories,
+    },
+  };
 }

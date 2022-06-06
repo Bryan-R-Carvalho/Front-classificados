@@ -4,6 +4,7 @@ export const SidebarContext = createContext({});
 
 export const SidebarProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+
   const open = useCallback((state) => setIsOpen(state), []);
 
   return (

@@ -1,15 +1,17 @@
 import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 import SearchProduct from "../../components/SearchProduct";
 import { useContext } from "react";
 import { useRouter } from "next/router";
 import { SearchContext } from "../../context/SearchContext";
 
-export default function Buscar() {
+export default function Buscar({ categories }) {
   const { item } = useContext(SearchContext);
   const router = useRouter();
   return (
     <div className="min-h-full bg-gray-100">
       <Header />
+      <Sidebar categories={categories} />
       <main className="lg:flex max-w-screen-2xl mx-auto">
         <div className="flex-grow m-5">
           {item.length > 0 ? (
@@ -37,4 +39,15 @@ export default function Buscar() {
       </main>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const categories = await fetch(
+    "https://fakestoreapi.com/products/categories"
+  ).then((res) => res.json());
+  return {
+    props: {
+      categories,
+    },
+  };
 }

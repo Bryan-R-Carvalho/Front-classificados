@@ -1,14 +1,13 @@
 import Image from "next/image";
 import Head from "next/head";
 import Header from "../../components/Header";
+import Sidebar from "../../components/Sidebar";
 import { useRouter } from "next/router";
 import { TruckIcon } from "@heroicons/react/outline";
 
-export default function Classificado(products) {
+export default function Classificado({ products, categories }) {
   const router = useRouter();
-  const product = products.products.find(
-    (product) => product.id == router.query.id
-  );
+  const product = products.find((product) => product.id == router.query.id);
 
   return (
     <div className="w-full h-full bg-gray-100">
@@ -16,6 +15,7 @@ export default function Classificado(products) {
         <title>Classificados</title>
       </Head>
       <Header />
+      <Sidebar categories={categories} />
       <main className="max-w-screen-2xl mx-auto">
         <div className="relative flex flex-col m-5 bg-white z-30 p-10 rounded-sm">
           <p className="absolute top-2 right-2 text-xs italic text-gray-400">
@@ -47,9 +47,13 @@ export async function getServerSideProps(context) {
   const products = await fetch("https://fakestoreapi.com/products").then(
     (res) => res.json()
   );
+  const categories = await fetch(
+    "https://fakestoreapi.com/products/categories"
+  ).then((res) => res.json());
   return {
     props: {
       products,
+      categories,
     },
   };
 }
