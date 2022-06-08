@@ -7,12 +7,16 @@ import { signIn, getCsrfToken } from "next-auth/react";
 import { useToast } from "../context/ToastContext";
 
 export default function Cadastrar() {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue  } = useForm();
   const router = useRouter();
   const { addToast } = useToast();
 
   const handleSignUp = useCallback(
     async (data) => {
+      var endereco = data.endereco+ " - Nº"+data.numero;
+      if(data.complemento){
+        endereco += ' - '+data.complemento
+      }
       data.telefone = data.telefone.replace(/\D/g, "");
       data.whatsapp = data.whatsapp.replace(/\D/g, "");
       data.usuario = {
@@ -20,6 +24,7 @@ export default function Cadastrar() {
         senha: data.senha,
         nome: data.nome,
         tipoUsuario: "fornecedor",
+        endereco: endereco,
       };
       try {
         const response = await api.post("/fornecedor/", JSON.stringify(data));
@@ -56,6 +61,22 @@ export default function Cadastrar() {
     e.target.value = !phone[2]
       ? phone[1]
       : "(" + phone[1] + ") " + phone[2] + (phone[3] ? "-" + phone[3] : "");
+  }
+
+  function getLocale(e){
+    var cep = e.target.value;
+    
+    if(cep.length == 8){
+      api.get(trataUrl(cep))
+        .then(r=> r.data)
+        .then(r=> {
+          setValue("endereco",r.logradouro + ' - Bairro: ' + r.bairro + ' - ' + r.localidade + '/' + r.uf);   
+        });
+    }
+
+    function trataUrl(cep){
+      return "https://viacep.com.br/ws/"+cep+"/json/";
+    }
   }
 
   return (
@@ -166,8 +187,35 @@ export default function Cadastrar() {
                   autoComplete="endereco"
                   required
                   className="form-control"
-                  placeholder="Endereço"
+                  placeholder="CEP (ex: 99999-999)"
+                  onBlur={getLocale}
                 />
+              </div>
+              <div className="flex w-full">
+                <div className="w-1/4 pr-1">
+                  <input
+                    {...register("numero")}
+                    id="numero"
+                    name="numero"
+                    type="text"
+                    autoComplete="numero"
+                    required
+                    className="form-control"
+                    placeholder="Nº"
+                  />
+                </div>
+                <div className="w-3/4 pl-1">
+                  <input
+                    {...register("complemento")}
+                    id="complemento"
+                    name="complemento"
+                    type="text"
+                    autoComplete="complemento"
+                    required
+                    className="form-control"
+                    placeholder="Complemento"
+                  />
+                </div>
               </div>
               <div>
                 <input
