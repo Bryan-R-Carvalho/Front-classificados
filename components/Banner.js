@@ -25,7 +25,7 @@ function Banner() {
           <img
             style={{ height: 610 }}
             loading="lazy"
-            src="https://macae.rj.gov.br/midia/noticias/37782/1482319601.jpg"
+            src="https://wegg.com.br/wp-content/uploads/2021/12/Banner-Macae-pronto-para-morar.jpg"
             alt=""
           />
         </div>
@@ -33,7 +33,7 @@ function Banner() {
           <img
             style={{ height: 610 }}
             loading="lazy"
-            src="https://macae.rj.gov.br/midia/noticias/37782/1482319601.jpg"
+            src="https://thumbs.dreamstime.com/b/flag-macae-brazil-cloudy-sky-background-sunset-panoramic-view-brazilian-travel-patriot-concept-copy-space-flag-236612268.jpg"
             alt=""
           />
         </div>

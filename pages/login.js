@@ -22,7 +22,6 @@ export default function Login({ csrfToken }) {
       addToast({
         type: "alert",
         title: "Usuário ou senha inválidos",
-        description: error.message,
       });
     }
   }
