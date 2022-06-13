@@ -20,7 +20,7 @@ export default function Produtos({ categories, products }) {
         </div>
         <div className="p-4 bg-white rounded-lg dark:bg-gray-800 h-auto">
           {products.slice(0, 10).map((product) => (
-            <ul>
+            <ul key={product.id}>
               <li>
                 <div className="flex flex-col space-y-10">
                   <div className="relative grid grid-cols-5">

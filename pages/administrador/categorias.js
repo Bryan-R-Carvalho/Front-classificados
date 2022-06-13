@@ -86,7 +86,7 @@ export default function Categorias({ categories }) {
           method="POST"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div class="flex mb-4 border-b border-gray-200 dark:border-gray-700 justify-center">
+          <div className="flex mb-4 border-b border-gray-200 dark:border-gray-700 justify-center">
             <input
               {...register("nome")}
               id="nome"
