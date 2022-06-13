@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useState } from "react";
+import EditProvider from "../components/EditProvider";
 
 export const SidebarContext = createContext({});
 

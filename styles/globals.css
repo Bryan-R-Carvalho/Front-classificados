@@ -15,6 +15,12 @@
   .buttonRemover {
     @apply p-2 text-xs md:text-sm bg-gradient-to-b from-red-200 to-red-400 border border-red-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-red-500 active:from-red-500;
   }
+  .buttonEditar {
+    @apply p-2 text-xs md:text-sm bg-gradient-to-b from-blue-200 to-blue-400 border border-blue-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-blue-500 active:from-blue-500;
+  }
+  .buttonCadastrar {
+    @apply p-2 text-xs md:text-sm bg-gradient-to-b from-green-200 to-green-400 border border-green-300 rounded-sm focus:outline-none focus:ring-2 focus:ring-green-500 active:from-green-500;
+  }
   .buttonHeader {
     @apply p-2 text-xs md:text-sm bg-gradient-to-b bg-yellow-400 hover:bg-yellow-500 rounded-md;
   }

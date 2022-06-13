@@ -63,12 +63,13 @@ export default function Sidebar({ categories }) {
                   />
                 </Disclosure.Button>
                 <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                  {categories.map((category) => (
+                  {categories.map(({ id, nome }) => (
                     <div
+                      key={id}
                       className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none"
                       onClick={() => handleSearch(category)}
                     >
-                      <span>{category}</span>
+                      <span>{nome}</span>
                     </div>
                   ))}
                 </Disclosure.Panel>

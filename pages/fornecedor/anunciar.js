@@ -106,7 +106,7 @@ export default function Anunciar({ categories }) {
 
 export async function getServerSideProps(context) {
   const categories = await fetch(
-    "https://fakestoreapi.com/products/categories"
+    "https://classificados-back.herokuapp.com/categorias/"
   ).then((res) => res.json());
   return {
     props: {

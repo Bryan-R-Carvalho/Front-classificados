@@ -1,9 +1,11 @@
 import Head from "next/head";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import Providers from "../../components/Providers";
+import ManageProviders from "../../components/ManageProviders";
 import { useState } from "react";
 
-export default function Anuncios({ categories }) {
+export default function Anuncios({ providers, categories }) {
   const [active, setActive] = useState([true, false, false, false]);
 
   const handleClick = (index) => {
@@ -42,7 +44,7 @@ export default function Anuncios({ categories }) {
                 role="tab"
                 onClick={() => handleClick(0)}
               >
-                Aprovar Fornecedor ( 0 )
+                Aprovar Fornecedor
               </button>
             </li>
             <li className="mr-2" role="presentation">
@@ -55,7 +57,7 @@ export default function Anuncios({ categories }) {
                 role="tab"
                 onClick={() => handleClick(1)}
               >
-                Aprovar Produto ( 0 )
+                Aprovar Produto
               </button>
             </li>
             <li className="mr-2" role="presentation">
@@ -68,7 +70,7 @@ export default function Anuncios({ categories }) {
                 role="tab"
                 onClick={() => handleClick(2)}
               >
-                Gerenciar Fornecedor ( 0 )
+                Gerenciar Fornecedor
               </button>
             </li>
             <li role="presentation">
@@ -81,16 +83,20 @@ export default function Anuncios({ categories }) {
                 role="tab"
                 onClick={() => handleClick(3)}
               >
-                Gerenciar Produto ( 0 )
+                Gerenciar Produto
               </button>
             </li>
           </ul>
         </div>
         <div>
           <div className={"painel" + (active[0] ? "" : " hidden")}>
-            <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-              Ops, parece que não há nada aqui! :(
-            </p>
+            {providers ? (
+              <Providers providers={providers} />
+            ) : (
+              <p className="text-sm text-center text-gray-500 dark:text-gray-400">
+                Ops, parece que não há nada aqui! :(
+              </p>
+            )}
           </div>
           <div className={"painel" + (active[1] ? "" : " hidden")}>
             <p className="text-sm text-center text-gray-500 dark:text-gray-400">
@@ -98,9 +104,13 @@ export default function Anuncios({ categories }) {
             </p>
           </div>
           <div className={"painel" + (active[2] ? "" : " hidden")}>
-            <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-              Ops, parece que não há nada aqui! :(
-            </p>
+            {providers ? (
+              <ManageProviders providers={providers} />
+            ) : (
+              <p className="text-sm text-center text-gray-500 dark:text-gray-400">
+                Ops, parece que não há nada aqui! :(
+              </p>
+            )}
           </div>
           <div className={"painel" + (active[3] ? "" : " hidden")}>
             <p className="text-sm text-center text-gray-500 dark:text-gray-400">
@@ -114,11 +124,15 @@ export default function Anuncios({ categories }) {
 }
 
 export async function getServerSideProps(context) {
+  const providers = await fetch(
+    "https://classificados-back.herokuapp.com/fornecedor/"
+  ).then((res) => res.json());
   const categories = await fetch(
-    "https://fakestoreapi.com/products/categories"
+    "https://classificados-back.herokuapp.com/categorias/"
   ).then((res) => res.json());
   return {
     props: {
+      providers,
       categories,
     },
   };

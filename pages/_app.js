@@ -3,6 +3,7 @@ import { SessionProvider } from "next-auth/react";
 import { SearchProvider } from "../context/SearchContext";
 import { SidebarProvider } from "../context/SidebarContext";
 import { ToastProvider } from "../context/ToastContext";
+import { EditProvider } from "../context/EditProviderContext";
 
 const MyApp = ({ Component, pageProps }) => {
   return (
@@ -10,7 +11,9 @@ const MyApp = ({ Component, pageProps }) => {
       <ToastProvider>
         <SearchProvider>
           <SidebarProvider>
-            <Component {...pageProps} />
+            <EditProvider>
+              <Component {...pageProps} />
+            </EditProvider>
           </SidebarProvider>
         </SearchProvider>
       </ToastProvider>

@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import { TrashIcon } from "@heroicons/react/solid";
 
 export default function Bairros({ categories }) {
   return (
@@ -25,19 +24,8 @@ export default function Bairros({ categories }) {
           <button className="button m-2">Adicionar</button>
         </div>
         <div className="painel">
-          {categories.map((category) => (
-            <ul>
-              <li>
-                <div className="flex justify-between ">
-                  <p className="my-auto">{category}</p>
-                  <div className="flex buttonRemover cursor-pointer">
-                    <TrashIcon className="w-4" />
-                    <p>Remover</p>
-                  </div>
-                </div>
-              </li>
-              <hr className="my-2" />
-            </ul>
+          {categories.map(({ id, nome }) => (
+            <p key={id}>{nome}</p>
           ))}
         </div>
       </main>
@@ -47,7 +35,7 @@ export default function Bairros({ categories }) {
 
 export async function getServerSideProps(context) {
   const categories = await fetch(
-    "https://fakestoreapi.com/products/categories"
+    "https://classificados-back.herokuapp.com/categorias/"
   ).then((res) => res.json());
   return {
     props: {
