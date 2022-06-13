@@ -47,9 +47,9 @@ export async function getServerSideProps(context) {
   const products = await fetch("https://fakestoreapi.com/products").then(
     (res) => res.json()
   );
-  const categories = await fetch(
-    "https://classificados-back.herokuapp.com/categorias/"
-  ).then((res) => res.json());
+  const categories = await fetch(process.env.BASE_URL + "/categorias/").then(
+    (res) => res.json()
+  );
   return {
     props: {
       products,

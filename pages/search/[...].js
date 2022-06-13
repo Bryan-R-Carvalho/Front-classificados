@@ -42,9 +42,9 @@ export default function Buscar({ categories }) {
 }
 
 export async function getServerSideProps(context) {
-  const categories = await fetch(
-    "https://fakestoreapi.com/products/categories"
-  ).then((res) => res.json());
+  const categories = await fetch(process.env.BASE_URL + "/categories").then(
+    (res) => res.json()
+  );
   return {
     props: {
       categories,

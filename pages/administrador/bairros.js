@@ -34,9 +34,9 @@ export default function Bairros({ categories }) {
 }
 
 export async function getServerSideProps(context) {
-  const categories = await fetch(
-    "https://classificados-back.herokuapp.com/categorias/"
-  ).then((res) => res.json());
+  const categories = await fetch(process.env.BASE_URL + "/categorias/").then(
+    (res) => res.json()
+  );
   return {
     props: {
       categories,

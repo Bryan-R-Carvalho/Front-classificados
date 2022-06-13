@@ -26,12 +26,12 @@ export default function Fornecedores({ providers, categories }) {
 }
 
 export async function getServerSideProps(context) {
-  const providers = await fetch(
-    "https://classificados-back.herokuapp.com/fornecedor/"
-  ).then((res) => res.json());
-  const categories = await fetch(
-    "https://classificados-back.herokuapp.com/categorias/"
-  ).then((res) => res.json());
+  const providers = await fetch(process.env.BASE_URL + "/fornecedor/").then(
+    (res) => res.json()
+  );
+  const categories = await fetch(process.env.BASE_URL + "/categorias/").then(
+    (res) => res.json()
+  );
   return {
     props: {
       providers,
