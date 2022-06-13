@@ -7,15 +7,15 @@ import { signIn, getCsrfToken } from "next-auth/react";
 import { useToast } from "../context/ToastContext";
 
 export default function Cadastrar() {
-  const { register, handleSubmit, setValue  } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
   const router = useRouter();
   const { addToast } = useToast();
 
   const handleSignUp = useCallback(
     async (data) => {
-      var endereco = data.endereco+ " - Nº"+data.numero;
-      if(data.complemento){
-        endereco += ' - '+data.complemento
+      var endereco = data.endereco + " - Nº" + data.numero;
+      if (data.complemento) {
+        endereco += " - " + data.complemento;
       }
       data.telefone = data.telefone.replace(/\D/g, "");
       data.whatsapp = data.whatsapp.replace(/\D/g, "");
@@ -63,19 +63,29 @@ export default function Cadastrar() {
       : "(" + phone[1] + ") " + phone[2] + (phone[3] ? "-" + phone[3] : "");
   }
 
-  function getLocale(e){
+  function getLocale(e) {
     var cep = e.target.value;
-    
-    if(cep.length == 8){
-      api.get(trataUrl(cep))
-        .then(r=> r.data)
-        .then(r=> {
-          setValue("endereco",r.logradouro + ' - Bairro: ' + r.bairro + ' - ' + r.localidade + '/' + r.uf);   
+
+    if (cep.length == 8) {
+      api
+        .get(trataUrl(cep))
+        .then((r) => r.data)
+        .then((r) => {
+          setValue(
+            "endereco",
+            r.logradouro +
+              " - Bairro: " +
+              r.bairro +
+              " - " +
+              r.localidade +
+              "/" +
+              r.uf
+          );
         });
     }
 
-    function trataUrl(cep){
-      return "https://viacep.com.br/ws/"+cep+"/json/";
+    function trataUrl(cep) {
+      return "https://viacep.com.br/ws/" + cep + "/json/";
     }
   }
 
@@ -147,7 +157,6 @@ export default function Cadastrar() {
                   id="whatsapp"
                   type="tel"
                   autoComplete="whatsapp"
-                  required
                   className="form-control"
                   placeholder="Whatsapp (ex: (99) 99999-9999)"
                   minLength="14"
@@ -161,7 +170,6 @@ export default function Cadastrar() {
                   name="site"
                   type="url"
                   autoComplete="site"
-                  required
                   className="form-control"
                   placeholder="Site (ex: http://www.exemplo.com)"
                 />
@@ -173,7 +181,6 @@ export default function Cadastrar() {
                   name="instagram"
                   type="text"
                   autoComplete="instagram"
-                  required
                   className="form-control"
                   placeholder="Instagram (ex: exemplo)"
                 />
@@ -199,7 +206,6 @@ export default function Cadastrar() {
                     name="numero"
                     type="text"
                     autoComplete="numero"
-                    required
                     className="form-control"
                     placeholder="Nº"
                   />
@@ -211,7 +217,6 @@ export default function Cadastrar() {
                     name="complemento"
                     type="text"
                     autoComplete="complemento"
-                    required
                     className="form-control"
                     placeholder="Complemento"
                   />
