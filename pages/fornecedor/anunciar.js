@@ -75,8 +75,10 @@ export default function Anunciar({ categories }) {
                 required
               >
                 <option selected>Selecione uma categoria</option>
-                {categories.map((category) => (
-                  <option value={category}>{category}</option>
+                {categories.map(({ id, nome }) => (
+                  <option key={id} value={nome}>
+                    {nome}
+                  </option>
                 ))}
               </select>
             </div>
