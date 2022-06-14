@@ -32,6 +32,7 @@ function Providers({ providers }) {
       aprovado: true,
     };
     try {
+      console.log(provider);
       const response = await api.put("/fornecedor/", JSON.stringify(provider));
       setProvidersList(providersList.filter((provider) => provider.id !== id));
       addToast({
