@@ -1,20 +1,26 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import EditProvider from "./EditProvider";
 import { Disclosure } from "@headlessui/react";
-import { EditProviderContext } from "../context/EditProviderContext";
+import { OpenContext } from "../context/OpenContext";
+
 import {
-  LockOpenIcon,
+  ThumbUpIcon,
   PencilIcon,
   TrashIcon,
   LockClosedIcon,
 } from "@heroicons/react/solid";
 
-function ManageProviders({ providers }) {
-  const [providersList, setProvidersList] = useState(providers);
-  const { isOpen, open } = useContext(EditProviderContext);
+function ManageProviders({
+  manageAprove,
+  onEdit,
+  openEditModal,
+  providersList,
+}) {
+  const { openEdit } = useContext(OpenContext);
 
   return (
     <div>
+      <h1>{openEdit}</h1>
       {providersList.map(
         ({
           id,
@@ -38,14 +44,46 @@ function ManageProviders({ providers }) {
                         <p className="my-auto">{nome}</p>
                       </Disclosure.Button>
                       {aprovado ? (
-                        <button className="flex button mx-2 cursor-pointer">
+                        <button
+                          className="flex button mx-2 cursor-pointer"
+                          onClick={() =>
+                            manageAprove({
+                              id,
+                              nome,
+                              email,
+                              whatsapp,
+                              telefone,
+                              site,
+                              endereco,
+                              instagram,
+                              delivery,
+                              aprovado: false,
+                            })
+                          }
+                        >
                           <LockClosedIcon className="w-4 mr-2" />
                           Desativar
                         </button>
                       ) : (
-                        <button className="flex button mx-2 cursor-pointer">
-                          <LockOpenIcon className="w-4 mr-2" />
-                          Ativar
+                        <button
+                          className="flex buttonCadastrar mx-2 px-3 cursor-pointer"
+                          onClick={() =>
+                            manageAprove({
+                              id,
+                              nome,
+                              email,
+                              whatsapp,
+                              telefone,
+                              site,
+                              endereco,
+                              instagram,
+                              delivery,
+                              aprovado: true,
+                            })
+                          }
+                        >
+                          <ThumbUpIcon className="w-4 mr-2" />
+                          Aprovar
                         </button>
                       )}
                       <button className="flex buttonRemover cursor-pointer">
@@ -64,6 +102,8 @@ function ManageProviders({ providers }) {
                         endereco={endereco}
                         instagram={instagram}
                         delivery={delivery}
+                        onEdit={onEdit}
+                        openEditModal={openEditModal}
                       />
                       <div>
                         <p>E-mail: {email}</p>
@@ -76,7 +116,7 @@ function ManageProviders({ providers }) {
                       </div>
                       <button
                         className="flex my-2 button cursor-pointer"
-                        onClick={() => open(!isOpen)}
+                        onClick={() => openEditModal(!openEdit)}
                       >
                         <PencilIcon className="w-4 mr-2" />
                         Editar

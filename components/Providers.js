@@ -1,53 +1,7 @@
-import { useState } from "react";
 import { ThumbUpIcon } from "@heroicons/react/solid";
 import { Disclosure } from "@headlessui/react";
-import { useToast } from "../context/ToastContext";
-import api from "../pages/api/api";
 
-function Providers({ providers }) {
-  const [providersList, setProvidersList] = useState(providers);
-  const { addToast } = useToast();
-
-  const onAprove = async ({
-    id,
-    nome,
-    email,
-    whatsapp,
-    telefone,
-    site,
-    endereco,
-    instagram,
-    delivery,
-  }) => {
-    const provider = {
-      id,
-      nome,
-      email,
-      whatsapp,
-      telefone,
-      site,
-      endereco,
-      instagram,
-      delivery,
-      aprovado: true,
-    };
-    try {
-      console.log(provider);
-      const response = await api.put("/fornecedor/", JSON.stringify(provider));
-      setProvidersList(providersList.filter((provider) => provider.id !== id));
-      addToast({
-        type: "success",
-        title: "Fornecedor aprovado com sucesso",
-      });
-    } catch (error) {
-      addToast({
-        type: "alert",
-        title: "Erro ao aprovar fornecedor",
-        description: error.message,
-      });
-    }
-  };
-
+function Providers({ onAprove, providersList }) {
   return (
     <div>
       {providersList

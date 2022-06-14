@@ -4,7 +4,7 @@ import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useCallback, useContext, useState } from "react";
 import { SearchContext } from "../context/SearchContext";
-import { SidebarContext } from "../context/SidebarContext";
+import { OpenContext } from "../context/OpenContext";
 import { useToast } from "../context/ToastContext";
 
 function Header() {
@@ -13,7 +13,7 @@ function Header() {
   const loading = status === "loading";
   const router = useRouter();
   const { search } = useContext(SearchContext);
-  const { open } = useContext(SidebarContext);
+  const { open } = useContext(OpenContext);
   const { addToast } = useToast();
 
   const handleChange = useCallback(
@@ -80,14 +80,21 @@ function Header() {
               </>
             )}
           </div>
-          <div
+          <button
             onClick={
               !session
                 ? () => router.push("/login")
                 : () => {
                     session.user.role === "administrador"
                       ? router.push("/administrador/painel")
-                      : router.push("/fornecedor/painel");
+                      : session.user.aprovado
+                      ? router.push("/fornecedor/painel")
+                      : addToast({
+                          type: "alert",
+                          title: "Atenção",
+                          description:
+                            "Você precisa ser aprovado para acessar o painel do fornecedor",
+                        });
                   }
             }
             className="link"
@@ -97,7 +104,7 @@ function Header() {
             ) : (
               <p>Meus Anuncios</p>
             )}
-          </div>
+          </button>
           <button
             onClick={
               !session

@@ -3,16 +3,37 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon, ArrowLeftIcon } from "@heroicons/react/solid";
-import { SidebarContext } from "../context/SidebarContext";
+import { OpenContext } from "../context/OpenContext";
 import { SearchContext } from "../context/SearchContext";
 import { signOut } from "next-auth/react";
 
 export default function Sidebar({ categories }) {
   const { data: session, status } = useSession();
-  const { isOpen, open } = useContext(SidebarContext);
+  const { isOpen, open } = useContext(OpenContext);
   const loading = status === "loading";
   const { search } = useContext(SearchContext);
   const router = useRouter();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("click", handleClickOutside, false);
+    } else {
+      document.removeEventListener("click", handleClickOutside, false);
+    }
+    return () => {
+      document.removeEventListener("click", handleClickOutside, false);
+    };
+  }, [isOpen]);
+
+  //close sidebar componet if user click outside of it
+  const handleClickOutside = useCallback(
+    (e) => {
+      if (isOpen && !e.target.closest(".show-sidebar")) {
+        open(false);
+      }
+    },
+    [isOpen, open]
+  );
 
   const handleRouter = useCallback(
     (path) => {
@@ -36,7 +57,7 @@ export default function Sidebar({ categories }) {
   return (
     <div
       className={`h-full shadow-md bg-white fixed top-0 z-50 ${
-        !isOpen ? " w-0" : " w-80"
+        !isOpen ? " w-0" : " w-80 show-sidebar"
       } duration-300 ease-in-out overflow-hidden`}
     >
       <ArrowLeftIcon
@@ -85,12 +106,6 @@ export default function Sidebar({ categories }) {
                 onClick={() => handleRouter("/administrador/categorias")}
               >
                 <span>Gerenciar Categoria</span>
-              </div>
-              <div
-                className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none"
-                onClick={() => handleRouter("/administrador/bairros")}
-              >
-                <span>Gerenciar Bairros</span>
               </div>
               <div
                 className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none"

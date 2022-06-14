@@ -21,7 +21,6 @@ export default function Categorias({ categories }) {
         title: "Categoria cadastrada com sucesso",
       });
       setCategoriesList([...categoriesList, response.data]);
-      document.getElementById("form").reset();
     } catch (error) {
       addToast({
         type: "alert",
@@ -74,7 +73,7 @@ export default function Categorias({ categories }) {
         <title>Classificados</title>
       </Head>
       <Header />
-      <Sidebar categories={categories} />
+      <Sidebar categories={categoriesList} />
       <main className="max-w-screen-2xl mx-auto">
         <div className="m-5">
           <h1 className="text-4xl font-light m-0 p-0 box-border text-gray-600">
@@ -87,7 +86,7 @@ export default function Categorias({ categories }) {
           method="POST"
           onSubmit={handleSubmit(onSubmit)}
         >
-          <div className="flex mb-4 border-b border-gray-200 dark:border-gray-700 justify-center">
+          <div className="flex mb-4 border-b border-gray-200  justify-center">
             <input
               {...register("nome")}
               id="nome"

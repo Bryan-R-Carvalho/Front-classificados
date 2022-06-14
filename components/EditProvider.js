@@ -1,9 +1,8 @@
-import { useCallback, useContext } from "react";
-import { useToast } from "../context/ToastContext";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import api from "../pages/api/api";
 import { XIcon } from "@heroicons/react/solid";
-import { EditProviderContext } from "../context/EditProviderContext";
+import { OpenContext } from "../context/OpenContext";
 
 function EditProvider({
   id,
@@ -15,52 +14,11 @@ function EditProvider({
   endereco,
   instagram,
   delivery,
+  onEdit,
+  openEditModal,
 }) {
   const { register, handleSubmit, setValue } = useForm();
-  const { isOpen, open } = useContext(EditProviderContext);
-  const { addToast } = useToast();
-
-  const handleSignUp = useCallback(
-    async (data) => {
-      var endereco = data.endereco + " - Nº" + data.numero;
-      if (data.complemento) {
-        endereco += " - " + data.complemento;
-      }
-      data.telefone = data.telefone.replace(/\D/g, "");
-      data.whatsapp = data.whatsapp.replace(/\D/g, "");
-      data.usuario = {
-        login: data.email,
-        senha: data.senha,
-        nome: data.nome,
-        tipoUsuario: "fornecedor",
-        endereco: endereco,
-      };
-      try {
-        const response = await api.post("/fornecedor/", JSON.stringify(data));
-        if (response.status === 200) {
-          addToast({
-            type: "success",
-            title: "Cadastro realizado com sucesso!",
-            description: "Agora você pode fazer login",
-          });
-          signIn("credentials", data.usuario);
-        } else {
-          addToast({
-            type: "error",
-            title: "Erro ao cadastrar",
-            description: "Tente novamente mais tarde",
-          });
-        }
-      } catch (err) {
-        addToast({
-          type: "error",
-          title: "Erro ao realizar o cadastro",
-          description: "Verifique seus dados e tente novamente",
-        });
-      }
-    },
-    [addToast]
-  );
+  const { openEdit } = useContext(OpenContext);
 
   function formatPhoneNumber(e) {
     var phone = e.target.value
@@ -70,6 +28,7 @@ function EditProvider({
     e.target.value = !phone[2]
       ? phone[1]
       : "(" + phone[1] + ") " + phone[2] + (phone[3] ? "-" + phone[3] : "");
+    setValue("telefone", e.target.value);
   }
 
   function getLocale(e) {
@@ -100,7 +59,7 @@ function EditProvider({
   return (
     <div
       className={
-        isOpen
+        openEdit
           ? "absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-black bg-opacity-50"
           : "hidden"
       }
@@ -108,45 +67,55 @@ function EditProvider({
       <div className="bg-white rounded-lg shadow-lg p-8">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold">Editar de Fornecedor</h2>
-          <XIcon className="w-10 cursor-pointer" onClick={() => open(false)} />
+          <XIcon
+            className="w-10 cursor-pointer"
+            onClick={() => openEditModal(false)}
+          />
         </div>
         <div className="flex flex-col items-center">
           <form
             action="/api/auth/callback/credentials"
             method="POST"
-            onSubmit={handleSubmit(handleSignUp)}
+            onSubmit={handleSubmit(onEdit)}
           >
             <div className="-space-y-px">
               <div>
+                <input
+                  {...register("id")}
+                  id="id"
+                  type="hidden"
+                  name="id"
+                  value={id}
+                />
                 <input
                   {...register("nome")}
                   id="nome"
                   name="nome"
                   type="text"
-                  autoComplete="nome"
                   required
                   className="form-control"
-                  placeholder="Nome"
-                  value={nome}
+                  value={setValue("nome", nome)}
+                  onChange={(e) => setValue("nome", e.target.value)}
                 />
               </div>
               <div>
                 <input
                   {...register("email")}
                   id="email-address"
-                  name="email"
+                  name={email}
                   type="email"
                   autoComplete="email"
                   required
                   className="form-control"
                   placeholder="Email"
-                  value={email}
+                  value={setValue("email", email)}
+                  onChange={(e) => setValue("email", e.target.value)}
                 />
               </div>
               <div>
                 <input
                   {...register("telefone")}
-                  onChange={formatPhoneNumber}
+                  onChange={(e) => formatPhoneNumber(e)}
                   id="telefone"
                   name="telefone"
                   type="tel"
@@ -156,22 +125,21 @@ function EditProvider({
                   placeholder="Telefone (ex: (99) 99999-9999)"
                   minLength="14"
                   maxLength="15"
-                  value={telefone}
+                  value={setValue("telefone", telefone)}
                 />
               </div>
               <div>
                 <input
                   {...register("whatsapp")}
                   onChange={formatPhoneNumber}
-                  id="whatsapp"
+                  id={whatsapp}
                   type="tel"
                   autoComplete="whatsapp"
-                  required
                   className="form-control"
                   placeholder="Whatsapp (ex: (99) 99999-9999)"
                   minLength="14"
                   maxLength="15"
-                  value={whatsapp}
+                  value={setValue("whatsapp", whatsapp)}
                 />
               </div>
               <div>
@@ -181,37 +149,38 @@ function EditProvider({
                   name="site"
                   type="url"
                   autoComplete="site"
-                  required
                   className="form-control"
                   placeholder="Site (ex: http://www.exemplo.com)"
-                  value={site}
+                  value={setValue("site", site)}
+                  onChange={(e) => setValue("site", e.target.value)}
                 />
               </div>
               <div>
                 <input
                   {...register("instagram")}
                   id="instagram"
-                  name="instagram"
+                  name={instagram}
                   type="text"
                   autoComplete="instagram"
-                  required
                   className="form-control"
                   placeholder="Instagram (ex: exemplo)"
-                  value={instagram}
+                  value={setValue("instagram", instagram)}
+                  onChange={(e) => setValue("instagram", e.target.value)}
                 />
               </div>
               <div>
                 <input
                   {...register("endereco")}
                   id="endereco"
-                  name="endereco"
+                  name={endereco}
                   type="text"
                   autoComplete="endereco"
                   required
                   className="form-control"
                   placeholder="CEP (ex: 99999-999)"
                   onBlur={getLocale}
-                  value={endereco}
+                  value={setValue("endereco", endereco)}
+                  onChange={(e) => setValue("endereco", e.target.value)}
                 />
               </div>
               <div className="flex w-full">
@@ -222,7 +191,6 @@ function EditProvider({
                     name="numero"
                     type="text"
                     autoComplete="numero"
-                    required
                     className="form-control"
                     placeholder="Nº"
                   />
@@ -234,7 +202,6 @@ function EditProvider({
                     name="complemento"
                     type="text"
                     autoComplete="complemento"
-                    required
                     className="form-control"
                     placeholder="Complemento"
                   />
@@ -248,6 +215,7 @@ function EditProvider({
                   autoComplete="delivery"
                   required
                   className="form-control"
+                  value={setValue("delivery", delivery)}
                 >
                   <option value="true">Sim</option>
                   <option value="false">Não</option>

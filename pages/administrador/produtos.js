@@ -18,7 +18,7 @@ export default function Produtos({ categories, products }) {
             Gerenciar Produtos
           </h1>
         </div>
-        <div className="p-4 bg-white rounded-lg dark:bg-gray-800 h-auto">
+        <div className="p-4 bg-white rounded-lg h-auto">
           {products.slice(0, 10).map((product) => (
             <ul key={product.id}>
               <li>

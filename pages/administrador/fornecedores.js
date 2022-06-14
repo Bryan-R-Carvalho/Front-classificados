@@ -2,8 +2,61 @@ import Head from "next/head";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import ManageProviders from "../../components/ManageProviders";
+import { useState } from "react";
+import { useToast } from "../../context/ToastContext";
+import api from "../api/api";
 
 export default function Fornecedores({ providers, categories }) {
+  const { addToast } = useToast();
+  const [providersList, setProvidersList] = useState(providers);
+
+  const manageAprove = async ({
+    id,
+    nome,
+    email,
+    whatsapp,
+    telefone,
+    site,
+    endereco,
+    instagram,
+    delivery,
+    aprovado,
+  }) => {
+    const provider = {
+      id,
+      nome,
+      email,
+      whatsapp,
+      telefone,
+      site,
+      endereco,
+      instagram,
+      delivery,
+      aprovado,
+    };
+    try {
+      const response = await api.put("/fornecedor/", JSON.stringify(provider));
+      setProvidersList(
+        providersList.map((provider) =>
+          provider.id === id ? response.data : provider
+        )
+      );
+
+      addToast({
+        type: "success",
+        title: `Fornecedor ${
+          aprovado ? " aprovado " : "desativado"
+        } com sucesso`,
+      });
+    } catch (error) {
+      addToast({
+        type: "alert",
+        title: "Erro ao aprovar fornecedor",
+        description: error.message,
+      });
+    }
+  };
+
   return (
     <div className="bg-gray-100 h-full">
       <Head>
@@ -18,7 +71,10 @@ export default function Fornecedores({ providers, categories }) {
           </h1>
         </div>
         <div className="painel">
-          <ManageProviders providers={providers} />
+          <ManageProviders
+            manageAprove={manageAprove}
+            providersList={providersList}
+          />
         </div>
       </main>
     </div>

@@ -10,7 +10,7 @@ export default function Anunciar({ categories }) {
   const handleAnnounce = useCallback(async (data) => {
     console.log(data);
     try {
-      const response = await fetch("/produtos", JSON.stringify(data));
+      const response = await fetch("/produtos/", JSON.stringify(data));
       const json = await response.json();
       console.log(json);
     } catch (err) {
@@ -52,18 +52,6 @@ export default function Anunciar({ categories }) {
                 className="form-control"
                 rows={5}
                 placeholder="Descrição"
-                required
-              />
-            </div>
-            <div>
-              <input
-                {...register("preco")}
-                name="preco"
-                className="form-control"
-                type="number"
-                min={0.0}
-                step={0.01}
-                placeholder="Preço"
                 required
               />
             </div>
