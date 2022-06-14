@@ -42,7 +42,7 @@ export default function Buscar({ categories }) {
 }
 
 export async function getServerSideProps(context) {
-  const categories = await fetch(process.env.BASE_URL + "/categories").then(
+  const categories = await fetch(process.env.BASE_URL + "/categorias/").then(
     (res) => res.json()
   );
   return {
