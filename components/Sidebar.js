@@ -67,7 +67,7 @@ export default function Sidebar({ categories }) {
                     <div
                       key={id}
                       className="w-full px-4 py-2 rounded-lg cursor-pointer hover:bg-neutral-100 dark:hover:bg-blackAlpha-50 focus:outline-none"
-                      onClick={() => handleSearch(category)}
+                      onClick={() => handleSearch(nome)}
                     >
                       <span>{nome}</span>
                     </div>
