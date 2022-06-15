@@ -93,7 +93,6 @@ export default function Painel({ providers, categories }) {
       aprovado: true,
     };
     try {
-      console.log(provider);
       const response = await api.put("/fornecedor/", JSON.stringify(provider));
       setProvidersList(
         providersList.map((provider) =>
@@ -113,46 +112,46 @@ export default function Painel({ providers, categories }) {
     }
   };
 
-  const onEdit = useCallback(
-    async (data) => {
-      data.endereco = data.endereco + " - Nº" + data.numero;
-      if (data.complemento) {
-        data.endereco += " - " + data.complemento;
-      }
-      data.id = parseInt(data.id);
-      data.telefone = data.telefone.replace(/\D/g, "");
-      data.whatsapp = data.whatsapp.replace(/\D/g, "");
-      try {
-        const response = await api.put("/fornecedor/", JSON.stringify(data));
-        setProvidersList(
-          providersList.map((provider) =>
-            provider.id === response.data.id ? response.data : provider
-          )
-        );
-        if (response.status === 200) {
-          console.log(data, response.data);
-          addToast({
-            type: "success",
-            title: "Fornecedor editado com sucesso",
-          });
-          openEditModal(false);
-        } else {
-          addToast({
-            type: "error",
-            title: "Erro ao editar fornecedor",
-            description: "Tente novamente mais tarde",
-          });
-        }
-      } catch (err) {
+  const onEdit = async (data) => {
+    data.endereco =
+      data.numero !== ""
+        ? `${data.endereco} - Nº ${data.numero}`
+        : data.endereco;
+    data.endereco =
+      data.complemento !== ""
+        ? `${data.endereco} - ${data.complemento}`
+        : data.endereco;
+    data.id = parseInt(data.id);
+    data.telefone = data.telefone.replace(/\D/g, "");
+    data.whatsapp = data.whatsapp.replace(/\D/g, "");
+    try {
+      const response = await api.put("/fornecedor/", JSON.stringify(data));
+      setProvidersList(
+        providersList.map((provider) =>
+          provider.id === response.data.id ? response.data : provider
+        )
+      );
+      if (response.status === 200) {
+        addToast({
+          type: "success",
+          title: "Fornecedor editado com sucesso",
+        });
+        openEditModal(false);
+      } else {
         addToast({
           type: "error",
           title: "Erro ao editar fornecedor",
-          description: "Verifique seus dados e tente novamente",
+          description: "Tente novamente mais tarde",
         });
       }
-    },
-    [addToast]
-  );
+    } catch (err) {
+      addToast({
+        type: "error",
+        title: "Erro ao editar fornecedor",
+        description: "Verifique seus dados e tente novamente",
+      });
+    }
+  };
 
   return (
     <div className="bg-gray-100 h-full">

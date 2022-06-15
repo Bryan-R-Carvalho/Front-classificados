@@ -1,24 +1,9 @@
-import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import api from "../pages/api/api";
 import { XIcon } from "@heroicons/react/solid";
-import { OpenContext } from "../context/OpenContext";
 
-function EditProvider({
-  id,
-  nome,
-  email,
-  whatsapp,
-  telefone,
-  site,
-  endereco,
-  instagram,
-  delivery,
-  onEdit,
-  openEditModal,
-}) {
+function EditProvider({ provider, onEdit, openEditModal }) {
   const { register, handleSubmit, setValue } = useForm();
-  const { openEdit } = useContext(OpenContext);
 
   function formatPhoneNumber(e) {
     var phone = e.target.value
@@ -57,13 +42,7 @@ function EditProvider({
     }
   }
   return (
-    <div
-      className={
-        openEdit
-          ? "absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-black bg-opacity-50"
-          : "hidden"
-      }
-    >
+    <div className="fixed top-0 left-0 w-full h-full flex flex-col items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-lg shadow-lg p-8">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold">Editar de Fornecedor</h2>
@@ -74,8 +53,8 @@ function EditProvider({
         </div>
         <div className="flex flex-col items-center">
           <form
-            action="/api/auth/callback/credentials"
-            method="POST"
+            action="/fornecedor/"
+            method="PUT"
             onSubmit={handleSubmit(onEdit)}
           >
             <div className="-space-y-px">
@@ -85,7 +64,7 @@ function EditProvider({
                   id="id"
                   type="hidden"
                   name="id"
-                  value={id}
+                  value={provider.id}
                 />
                 <input
                   {...register("nome")}
@@ -94,7 +73,7 @@ function EditProvider({
                   type="text"
                   required
                   className="form-control"
-                  value={setValue("nome", nome)}
+                  value={setValue("nome", provider.nome)}
                   onChange={(e) => setValue("nome", e.target.value)}
                 />
               </div>
@@ -102,13 +81,13 @@ function EditProvider({
                 <input
                   {...register("email")}
                   id="email-address"
-                  name={email}
+                  name="email"
                   type="email"
                   autoComplete="email"
                   required
                   className="form-control"
                   placeholder="Email"
-                  value={setValue("email", email)}
+                  value={setValue("email", provider.email)}
                   onChange={(e) => setValue("email", e.target.value)}
                 />
               </div>
@@ -125,21 +104,21 @@ function EditProvider({
                   placeholder="Telefone (ex: (99) 99999-9999)"
                   minLength="14"
                   maxLength="15"
-                  value={setValue("telefone", telefone)}
+                  value={setValue("telefone", provider.telefone)}
                 />
               </div>
               <div>
                 <input
                   {...register("whatsapp")}
                   onChange={formatPhoneNumber}
-                  id={whatsapp}
+                  id="whatsapp"
                   type="tel"
                   autoComplete="whatsapp"
                   className="form-control"
                   placeholder="Whatsapp (ex: (99) 99999-9999)"
                   minLength="14"
                   maxLength="15"
-                  value={setValue("whatsapp", whatsapp)}
+                  value={setValue("whatsapp", provider.whatsapp)}
                 />
               </div>
               <div>
@@ -151,7 +130,7 @@ function EditProvider({
                   autoComplete="site"
                   className="form-control"
                   placeholder="Site (ex: http://www.exemplo.com)"
-                  value={setValue("site", site)}
+                  value={setValue("site", provider.site)}
                   onChange={(e) => setValue("site", e.target.value)}
                 />
               </div>
@@ -159,12 +138,12 @@ function EditProvider({
                 <input
                   {...register("instagram")}
                   id="instagram"
-                  name={instagram}
+                  name="instagram"
                   type="text"
                   autoComplete="instagram"
                   className="form-control"
                   placeholder="Instagram (ex: exemplo)"
-                  value={setValue("instagram", instagram)}
+                  value={setValue("instagram", provider.instagram)}
                   onChange={(e) => setValue("instagram", e.target.value)}
                 />
               </div>
@@ -172,14 +151,14 @@ function EditProvider({
                 <input
                   {...register("endereco")}
                   id="endereco"
-                  name={endereco}
+                  name="endereco"
                   type="text"
                   autoComplete="endereco"
                   required
                   className="form-control"
                   placeholder="CEP (ex: 99999-999)"
                   onBlur={getLocale}
-                  value={setValue("endereco", endereco)}
+                  value={setValue("endereco", provider.endereco)}
                   onChange={(e) => setValue("endereco", e.target.value)}
                 />
               </div>
@@ -215,7 +194,7 @@ function EditProvider({
                   autoComplete="delivery"
                   required
                   className="form-control"
-                  value={setValue("delivery", delivery)}
+                  value={setValue("delivery", provider.delivery)}
                 >
                   <option value="true">Sim</option>
                   <option value="false">Não</option>
@@ -230,8 +209,6 @@ function EditProvider({
               >
                 Salvar
               </button>
-              <div className="w-full text-center border-b border-solid leading-[0.1em] my-[20px] mx-0 py-[1.3px]"></div>
-              <div className="flex text-center justify-center "></div>
             </div>
           </form>
         </div>

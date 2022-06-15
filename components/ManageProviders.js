@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import EditProvider from "./EditProvider";
 import { Disclosure } from "@headlessui/react";
 import { OpenContext } from "../context/OpenContext";
@@ -17,25 +17,30 @@ function ManageProviders({
   providersList,
 }) {
   const { openEdit } = useContext(OpenContext);
+  const [currentProvider, setCurrentProvider] = useState(null);
+
+  const onOpenEdit = (id) => {
+    setCurrentProvider(providersList.find((provider) => provider.id === id));
+    openEditModal(true);
+  };
 
   return (
     <div>
-      <h1>{openEdit}</h1>
-      {providersList.map(
-        ({
-          id,
-          nome,
-          email,
-          whatsapp,
-          telefone,
-          site,
-          endereco,
-          instagram,
-          delivery,
-          aprovado,
-        }) => (
-          <ul key={id}>
-            <li>
+      <ul>
+        {providersList.map(
+          ({
+            id,
+            nome,
+            email,
+            whatsapp,
+            telefone,
+            site,
+            endereco,
+            instagram,
+            delivery,
+            aprovado,
+          }) => (
+            <li key={id}>
               <Disclosure>
                 {({ Open }) => (
                   <>
@@ -92,31 +97,25 @@ function ManageProviders({
                       </button>
                     </div>
                     <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
-                      <EditProvider
-                        id={id}
-                        nome={nome}
-                        email={email}
-                        whatsapp={whatsapp}
-                        telefone={telefone}
-                        site={site}
-                        endereco={endereco}
-                        instagram={instagram}
-                        delivery={delivery}
-                        onEdit={onEdit}
-                        openEditModal={openEditModal}
-                      />
-                      <div>
-                        <p>E-mail: {email}</p>
-                        <p>Whatsapp: {whatsapp}</p>
-                        <p>Telefone: {telefone}</p>
-                        <p>Site: {site}</p>
-                        <p>Endereço: {endereco}</p>
-                        <p>Instagram: {instagram}</p>
-                        <p>Delivery: {delivery ? "Sim" : "Não"}</p>
+                      {openEdit ? (
+                        <EditProvider
+                          provider={currentProvider}
+                          onEdit={onEdit}
+                          openEditModal={openEditModal}
+                        />
+                      ) : null}
+                      <div className="flex flex-col">
+                        <span>E-mail: {email}</span>
+                        <span>Whatsapp: {whatsapp}</span>
+                        <span>Telefone: {telefone}</span>
+                        <span>Site: {site}</span>
+                        <span>Instagram: {instagram}</span>
+                        <span>Endereço: {endereco}</span>
+                        <span>Delivery: {delivery ? "Sim" : "Não"}</span>
                       </div>
                       <button
                         className="flex my-2 button cursor-pointer"
-                        onClick={() => openEditModal(!openEdit)}
+                        onClick={() => onOpenEdit(id)}
                       >
                         <PencilIcon className="w-4 mr-2" />
                         Editar
@@ -125,11 +124,11 @@ function ManageProviders({
                   </>
                 )}
               </Disclosure>
+              <hr className="my-2" />
             </li>
-            <hr className="my-2" />
-          </ul>
-        )
-      )}
+          )
+        )}
+      </ul>
     </div>
   );
 }

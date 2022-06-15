@@ -1,16 +1,25 @@
 import Head from "next/head";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
-import { useState } from "react";
+import EditCategory from "../../components/EditCategory";
+import { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "../../context/ToastContext";
+import { OpenContext } from "../../context/OpenContext";
 import { TrashIcon, PencilIcon } from "@heroicons/react/outline";
 import api from "../api/api";
 
 export default function Categorias({ categories }) {
   const { register, handleSubmit } = useForm();
   const [categoriesList, setCategoriesList] = useState(categories);
+  const [currentCategory, setCurrentCategory] = useState(null);
   const { addToast } = useToast();
+  const { openEdit, openEditModal } = useContext(OpenContext);
+
+  const onOpenEdit = (id) => {
+    setCurrentCategory(categoriesList.find((category) => category.id === id));
+    openEditModal(true);
+  };
 
   const onSubmit = async (data) => {
     try {
@@ -47,16 +56,17 @@ export default function Categorias({ categories }) {
     }
   };
 
-  const onEdit = async (id, nome) => {
+  const onEdit = async (data) => {
     try {
-      await api.put(`/categorias/${id}`, JSON.stringify(nome));
+      const response = await api.put("/categorias/", JSON.stringify(data));
       addToast({
         type: "success",
         title: "Categoria editada com sucesso",
       });
+      openEditModal(false);
       setCategoriesList(
         categoriesList.map((category) =>
-          category.id === id ? { ...category, ...nome } : category
+          category.id === response.data.id ? response.data : category
         )
       );
     } catch (error) {
@@ -102,15 +112,22 @@ export default function Categorias({ categories }) {
           </div>
         </form>
         <div className="painel">
-          {categoriesList.map(({ id, nome }) => (
-            <ul key={id}>
-              <li>
+          <ul>
+            {categoriesList.map(({ id, nome }) => (
+              <li id={id} key={id}>
                 <div className="flex justify-between ">
                   <p className="my-auto">{nome}</p>
                   <div className="flex gap-2">
+                    {openEdit ? (
+                      <EditCategory
+                        category={currentCategory}
+                        onEdit={onEdit}
+                        openEditModal={openEditModal}
+                      />
+                    ) : null}
                     <button
                       className="flex buttonEditar px-4 cursor-pointer"
-                      onClick={() => onEdit(id, nome)}
+                      onClick={() => onOpenEdit(id)}
                     >
                       <PencilIcon className="w-4" />
                       Alterar
@@ -124,10 +141,10 @@ export default function Categorias({ categories }) {
                     </button>
                   </div>
                 </div>
+                <hr className="my-2" />
               </li>
-              <hr className="my-2" />
-            </ul>
-          ))}
+            ))}
+          </ul>
         </div>
       </main>
     </div>
