@@ -43,13 +43,13 @@
     @apply bg-blue-200 border border-blue-300 text-blue-700 w-96 relative pt-4 pr-8 pb-4 pl-4 m-2 rounded-xl shadow-sm flex;
   }
   .activeClass {
-    @apply text-yellow-400 hover:text-yellow-400 dark:text-yellow-400 dark:hover:text-yellow-400 border-yellow-400 dark:border-yellow-400;
+    @apply text-yellow-400 hover:text-yellow-400 border-yellow-400;
   }
   .inactiveClass {
-    @apply border-transparent hover:text-yellow-400 hover:border-yellow-400 dark:hover:text-gray-300;
+    @apply border-transparent hover:text-yellow-400 hover:border-yellow-400;
   }
   .painel {
-    @apply p-4 bg-white rounded-lg dark:bg-gray-800 h-[40rem];
+    @apply p-4 bg-white rounded-lg  h-[40rem];
   }
 }
 

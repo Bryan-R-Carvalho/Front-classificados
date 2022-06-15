@@ -2,13 +2,15 @@ import Head from "next/head";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import ManageProviders from "../../components/ManageProviders";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useToast } from "../../context/ToastContext";
+import { OpenContext } from "../../context/OpenContext";
 import api from "../api/api";
 
 export default function Fornecedores({ providers, categories }) {
   const { addToast } = useToast();
   const [providersList, setProvidersList] = useState(providers);
+  const { onEdit, openEditModal } = useContext(OpenContext);
 
   const manageAprove = async ({
     id,
@@ -73,6 +75,8 @@ export default function Fornecedores({ providers, categories }) {
         <div className="painel">
           <ManageProviders
             manageAprove={manageAprove}
+            onEdit={onEdit}
+            openEditModal={openEditModal}
             providersList={providersList}
           />
         </div>
