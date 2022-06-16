@@ -49,7 +49,7 @@
     @apply border-transparent hover:text-yellow-400 hover:border-yellow-400;
   }
   .painel {
-    @apply p-4 bg-white rounded-lg  h-[40rem];
+    @apply p-4 bg-white rounded-lg h-auto min-h-[40rem];
   }
 }
 

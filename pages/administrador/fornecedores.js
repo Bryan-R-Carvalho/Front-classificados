@@ -101,7 +101,7 @@ export default function Fornecedores({ providers, categories }) {
   };
 
   return (
-    <div className="bg-gray-100 h-full">
+    <div className="bg-gray-100 pb-10 min-h-screen">
       <Head>
         <title>Classificados</title>
       </Head>
