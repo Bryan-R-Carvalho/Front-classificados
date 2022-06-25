@@ -9,13 +9,14 @@ function ProductFeed({ products }) {
             product.aprovado === true && product.disponibilidade === true
         )
         .slice(0, 4)
-        .map(({ id, nome, descricao, categoria, delivery }) => (
+        .map(({ id, nome, descricao, categoria, foto, delivery }) => (
           <Product
             key={id}
             id={id}
             nome={nome}
             descricao={descricao}
             categoria={categoria}
+            foto={foto}
             delivery={delivery}
           />
         ))}
@@ -38,6 +39,7 @@ function ProductFeed({ products }) {
               nome={nome}
               descricao={descricao}
               categoria={categoria}
+              foto={foto}
               delivery={delivery}
             />
           ))}
@@ -55,6 +57,7 @@ function ProductFeed({ products }) {
             nome={nome}
             descricao={descricao}
             categoria={categoria}
+            foto={foto}
             delivery={delivery}
           />
         ))}

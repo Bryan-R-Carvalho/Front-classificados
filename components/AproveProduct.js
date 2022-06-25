@@ -1,24 +1,13 @@
-import { useState, useEffect } from "react";
 import { ThumbUpIcon } from "@heroicons/react/solid";
 
 function AproveProduct({ onAproveProduct, product }) {
-  const [link, setLink] = useState(null);
-
-  useEffect(async () => {
-    const imagem = await fetch(
-      `https://classificados-back2.herokuapp.com/produtos/foto-produto/${product.id}`
-    )
-      .then((res) => res.blob())
-      .then((blob) => URL.createObjectURL(blob));
-    setLink(imagem);
-  }, []);
   return (
     <>
       <li>
         <div className="flex flex-col space-y-10">
           <div className="relative grid grid-cols-5">
             <img
-              src={link}
+              src={product.foto.imagem}
               className="w-[200px] h-[200px] object-contain self-center"
               alt="produto"
             />

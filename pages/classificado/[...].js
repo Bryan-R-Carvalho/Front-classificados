@@ -7,20 +7,13 @@ import { useEffect, useState } from "react";
 
 export default function Classificado({ categories }) {
   const router = useRouter();
-  const [link, setLink] = useState(null);
   const [product, setProduct] = useState({});
 
   useEffect(async () => {
-    const imagem = await fetch(
-      `https://classificados-back2.herokuapp.com/produtos/foto-produto/${router.query.id}`
-    )
-      .then((res) => res.blob())
-      .then((blob) => URL.createObjectURL(blob));
-    setLink(imagem);
-
     const produto = await fetch(
       `https://classificados-back2.herokuapp.com/produtos/${router.query.id}`
     ).then((res) => res.json());
+    console.log(produto);
     setProduct(produto);
   }, []);
 
@@ -37,7 +30,7 @@ export default function Classificado({ categories }) {
             {product.categoria}
           </p>
           <img
-            src={link}
+            src={product.foto.imagem}
             className="w-[200px] h-[200px] object-contain self-center"
             alt="produto"
           />

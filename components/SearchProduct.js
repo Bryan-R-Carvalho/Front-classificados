@@ -1,20 +1,8 @@
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { TruckIcon } from "@heroicons/react/outline";
 
-function SearchProduct({ id, nome, descricao, categoria, delivery }) {
+function SearchProduct({ id, nome, descricao, categoria, foto, delivery }) {
   const router = useRouter();
-
-  const [link, setLink] = useState(null);
-
-  useEffect(async () => {
-    const imagem = await fetch(
-      `https://classificados-back2.herokuapp.com/produtos/foto-produto/${id}`
-    )
-      .then((res) => res.blob())
-      .then((blob) => URL.createObjectURL(blob));
-    setLink(imagem);
-  }, []);
 
   return (
     <div
@@ -26,6 +14,7 @@ function SearchProduct({ id, nome, descricao, categoria, delivery }) {
             nome,
             descricao,
             categoria,
+            foto,
             delivery,
           },
         });
@@ -35,7 +24,7 @@ function SearchProduct({ id, nome, descricao, categoria, delivery }) {
     >
       <div className="relative grid grid-cols-5">
         <img
-          src={link}
+          src={foto.imagem}
           className="w-[200px] h-[200px] object-contain self-center"
           alt="produto"
         />

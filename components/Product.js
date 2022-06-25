@@ -1,19 +1,8 @@
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { TruckIcon } from "@heroicons/react/outline";
 
-function Product({ id, nome, descricao, categoria, delivery }) {
+function Product({ id, nome, descricao, categoria, foto, delivery }) {
   const router = useRouter();
-  const [link, setLink] = useState(null);
-
-  useEffect(async () => {
-    const imagem = await fetch(
-      `https://classificados-back2.herokuapp.com/produtos/foto-produto/${id}`
-    )
-      .then((res) => res.blob())
-      .then((blob) => URL.createObjectURL(blob));
-    setLink(imagem);
-  }, []);
 
   return (
     <div
@@ -30,7 +19,7 @@ function Product({ id, nome, descricao, categoria, delivery }) {
       </p>
 
       <img
-        src={link}
+        src={foto.imagem}
         className="w-[200px] h-[200px] object-contain self-center"
         alt="produto"
       />
