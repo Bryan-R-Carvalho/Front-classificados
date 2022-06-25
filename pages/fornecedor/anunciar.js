@@ -8,25 +8,33 @@ import api from "../api/api";
 import { useState, useCallback } from "react";
 
 export default function Anunciar({ categories }) {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue, reset } = useForm();
   const { data: session, status } = useSession();
   const { addToast } = useToast();
   const [length, setLength] = useState(0);
+
+  function encodeImageFileAsURL() {
+    try {
+      var file = document.querySelector("input[type=file]")["files"][0];
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        setValue("foto", { imagem: reader.result });
+      };
+      reader.readAsDataURL(file);
+    } catch {
+      return null;
+    }
+  }
 
   const handleAnnounce = async (data) => {
     data.fornecedorId = session.user.fornecedorId;
     data.categoriaId = parseInt(data.categoriaId);
 
-    const json = JSON.stringify(data);
-    const blob = new Blob([json], {
-      type: "application/json",
-    });
+    console.log(data);
 
-    const res = new FormData();
-    res.append("produto", blob);
-    res.append("imagem", data.imagem[0]);
     try {
-      const response = await api.post("/produtos/", res);
+      await api.post("/produtos/incluir", data);
+      reset();
       addToast({
         type: "success",
         title: "Produto cadastrado com sucesso!",
@@ -106,13 +114,14 @@ export default function Anunciar({ categories }) {
               </select>
             </div>
             <input
-              {...register("imagem")}
-              name="imagem"
+              {...register("foto.imagem", "data")}
+              {...register("file")}
+              name="file"
               type="file"
               className="form-control bg-white file:cursor-pointer file:buttonHeader"
               accept="image/*"
+              onChange={() => encodeImageFileAsURL()}
               required
-              multiple
             />
             <div className="text-right">
               <button
