@@ -15,7 +15,6 @@ export default function Classificado({ categories }) {
     ).then((res) => res.json());
     setProduct(produto);
   }, []);
-  console.log(product);
 
   return (
     <div className="w-full h-full bg-gray-100">
