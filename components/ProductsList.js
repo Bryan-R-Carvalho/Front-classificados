@@ -55,7 +55,7 @@ function ProductsList({ onProvide, product }) {
     <div className="flex flex-col space-y-10">
       <div className="relative grid grid-cols-5">
         <img
-          src={link}
+          src={product.foto.imagem}
           className="w-[200px] h-[200px] object-contain self-center"
           alt="produto"
         />
