@@ -21,7 +21,6 @@ export default function Classificado({ categories }) {
     const produto = await fetch(
       `https://classificados-back2.herokuapp.com/produtos/${router.query.id}`
     ).then((res) => res.json());
-    console.log(produto);
     setProduct(produto);
   }, []);
 
