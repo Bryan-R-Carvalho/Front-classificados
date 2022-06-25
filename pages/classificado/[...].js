@@ -7,15 +7,15 @@ import { useEffect, useState } from "react";
 
 export default function Classificado({ categories }) {
   const router = useRouter();
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState({ foto: { imamge: "" } });
 
   useEffect(async () => {
     const produto = await fetch(
       `https://classificados-back2.herokuapp.com/produtos/${router.query.id}`
     ).then((res) => res.json());
-    console.log(produto);
     setProduct(produto);
   }, []);
+  console.log(product);
 
   return (
     <div className="w-full h-full bg-gray-100">
