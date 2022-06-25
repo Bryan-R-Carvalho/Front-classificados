@@ -9,10 +9,10 @@ import { useToast } from "../context/ToastContext";
 
 function Header() {
   const { data: session, status } = useSession();
-  const [query, setQuery] = useState("");
   const loading = status === "loading";
+  const [query, setQuery] = useState("");
   const router = useRouter();
-  const { search } = useContext(SearchContext);
+  const { searchByName } = useContext(SearchContext);
   const { open } = useContext(OpenContext);
   const { addToast } = useToast();
 
@@ -29,11 +29,11 @@ function Header() {
   const handleSearch = useCallback(
     async (query) => {
       if (query) {
-        await search(query);
+        await searchByName(query);
         router.push(`/search/${query}`);
       }
     },
-    [search, router]
+    [searchByName, router]
   );
 
   return (

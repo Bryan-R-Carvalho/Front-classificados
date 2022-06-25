@@ -1,34 +1,41 @@
-import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { TruckIcon } from "@heroicons/react/outline";
 
-function Product({ id, title, price, description, category, image }) {
-  const [delivery] = useState(Math.random() < 0.5);
+function Product({ id, nome, descricao, categoria, delivery }) {
   const router = useRouter();
+  const [link, setLink] = useState(null);
+
+  useEffect(async () => {
+    const imagem = await fetch(
+      `https://classificados-back2.herokuapp.com/produtos/foto-produto/${id}`
+    )
+      .then((res) => res.blob())
+      .then((blob) => URL.createObjectURL(blob));
+    setLink(imagem);
+  }, []);
 
   return (
     <div
       onClick={() =>
         router.push({
           pathname: `/classificado/${id}`,
-          query: { id, title, price, description, category, image, delivery },
+          query: { id, nome, descricao, categoria, delivery },
         })
       }
       className="relative flex flex-col m-5 bg-white z-30 p-10 cursor-pointer"
     >
       <p className="absolute top-2 right-2 text-xs italic text-gray-400">
-        {category}
+        {categoria}
       </p>
-      <Image
-        src={image}
+
+      <img
+        src={link}
+        className="w-[200px] h-[200px] object-contain self-center"
         alt="produto"
-        height={200}
-        width={200}
-        objectFit="contain"
       />
-      <h4 className="my-3">{title}</h4>
-      <p className="text-xs my-2 line-clamp-2">{description}</p>
+      <h4 className="my-3">{nome}</h4>
+      <p className="text-xs my-2 line-clamp-2">{descricao}</p>
       {delivery && (
         <div className="flex items-center space-x-2 mt-5">
           <TruckIcon className="w-7" />

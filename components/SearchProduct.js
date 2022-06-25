@@ -1,11 +1,20 @@
-import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { TruckIcon } from "@heroicons/react/outline";
 
-function SearchProduct({ id, title, price, description, category, image }) {
-  const [delivery] = useState(Math.random() < 0.5);
+function SearchProduct({ id, nome, descricao, categoria, delivery }) {
   const router = useRouter();
+
+  const [link, setLink] = useState(null);
+
+  useEffect(async () => {
+    const imagem = await fetch(
+      `https://classificados-back2.herokuapp.com/produtos/foto-produto/${id}`
+    )
+      .then((res) => res.blob())
+      .then((blob) => URL.createObjectURL(blob));
+    setLink(imagem);
+  }, []);
 
   return (
     <div
@@ -14,11 +23,9 @@ function SearchProduct({ id, title, price, description, category, image }) {
           pathname: `/classificado/${id}`,
           query: {
             id,
-            title,
-            price,
-            description,
-            category,
-            image,
+            nome,
+            descricao,
+            categoria,
             delivery,
           },
         });
@@ -27,20 +34,18 @@ function SearchProduct({ id, title, price, description, category, image }) {
       className="flex flex-col p-5 m-5 space-y-10 bg-white cursor-pointer"
     >
       <div className="relative grid grid-cols-5">
-        <Image
-          src={image}
+        <img
+          src={link}
+          className="w-[200px] h-[200px] object-contain self-center"
           alt="produto"
-          height={200}
-          width={200}
-          objectFit="contain"
         />
 
         <div className="col-span-3 mx-5">
           <p className="absolute top-2 right-2 text-xs italic text-gray-400">
-            {category}
+            {categoria}
           </p>
-          <p>{title}</p>
-          <p className="text-xs my-2 line-clamp-3">{description}</p>
+          <p>{nome}</p>
+          <p className="text-xs my-2 line-clamp-3">{descricao}</p>
         </div>
 
         <div className="flex flex-col space-y-2 my-auto justify-self-end">

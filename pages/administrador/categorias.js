@@ -24,7 +24,6 @@ export default function Categorias({ categories }) {
   const onSubmit = async (data) => {
     try {
       const response = await api.post("/categorias/", JSON.stringify(data));
-      console.log(response);
       addToast({
         type: "success",
         title: "Categoria cadastrada com sucesso",

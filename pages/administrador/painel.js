@@ -1,4 +1,4 @@
-import { useState, useCallback, useContext } from "react";
+import { useState, useContext } from "react";
 import Head from "next/head";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
@@ -7,10 +7,13 @@ import ManageProviders from "../../components/ManageProviders";
 import { useToast } from "../../context/ToastContext";
 import { OpenContext } from "../../context/OpenContext";
 import api from "../api/api";
+import AproveProduct from "../../components/AproveProduct";
+import ManageProducts from "../../components/ManageProducts";
 
-export default function Painel({ providers, categories }) {
+export default function Painel({ products, providers, categories }) {
   const [active, setActive] = useState([true, false, false, false]);
   const [providersList, setProvidersList] = useState(providers);
+  const [productsList, setProductsList] = useState(products);
   const { openEditModal } = useContext(OpenContext);
   const { addToast } = useToast();
 
@@ -69,7 +72,7 @@ export default function Painel({ providers, categories }) {
     }
   };
 
-  const onAprove = async ({
+  const onAproveProvider = async ({
     id,
     nome,
     email,
@@ -112,7 +115,49 @@ export default function Painel({ providers, categories }) {
     }
   };
 
-  const onEdit = async (data) => {
+  const onAproveProduct = async (product) => {
+    product.aprovado = !product.aprovado;
+    try {
+      const response = await api.put(
+        "/produtos/administrador/AtualizarAprovacao",
+        JSON.stringify(product)
+      );
+      setProductsList(
+        productsList.map((p) => (p.id === response.data.id ? response.data : p))
+      );
+      addToast({
+        type: "success",
+        title: `Produto ${
+          response.aprovado ? " aprovado " : "desativado"
+        } com sucesso`,
+      });
+    } catch (error) {
+      addToast({
+        type: "alert",
+        title: "Erro ao aprovar Produto",
+        description: error.message,
+      });
+    }
+  };
+
+  const onRemoveProdutct = async (product) => {
+    try {
+      const response = await api.delete(`/produtos/${product.id}`);
+      setProductsList(productsList.filter((p) => p.id !== product.id));
+      addToast({
+        type: "success",
+        title: "Produto removido com sucesso.",
+      });
+    } catch (error) {
+      addToast({
+        type: "alert",
+        title: "Erro ao remover Produto",
+        description: error.message,
+      });
+    }
+  };
+
+  const onEditProvider = async (data) => {
     data.endereco =
       data.numero !== ""
         ? `${data.endereco} - Nº ${data.numero}`
@@ -200,7 +245,12 @@ export default function Painel({ providers, categories }) {
                 role="tab"
                 onClick={() => handleClick(1)}
               >
-                Aprovar Produto ( 0 )
+                Aprovar Produto ({" "}
+                {
+                  productsList.filter((product) => product.aprovado === false)
+                    .length
+                }{" "}
+                )
               </button>
             </li>
             <li className="mr-2" role="presentation">
@@ -226,7 +276,7 @@ export default function Painel({ providers, categories }) {
                 role="tab"
                 onClick={() => handleClick(3)}
               >
-                Gerenciar Produto ( 0 )
+                Gerenciar Produto ( {productsList.length} )
               </button>
             </li>
           </ul>
@@ -234,7 +284,10 @@ export default function Painel({ providers, categories }) {
         <div>
           <div className={"painel" + (active[0] ? "" : " hidden")}>
             {providers ? (
-              <Providers onAprove={onAprove} providersList={providersList} />
+              <Providers
+                onAprove={onAproveProvider}
+                providersList={providersList}
+              />
             ) : (
               <p className="text-sm text-center text-gray-500 dark:text-gray-400">
                 Ops, parece que não há nada aqui! :(
@@ -242,15 +295,31 @@ export default function Painel({ providers, categories }) {
             )}
           </div>
           <div className={"painel" + (active[1] ? "" : " hidden")}>
-            <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-              Ops, parece que não há nada aqui! :(
-            </p>
+            {products ? (
+              <div className="painel">
+                <ul>
+                  {productsList
+                    .filter((product) => product.aprovado === false)
+                    .map((product) => (
+                      <AproveProduct
+                        key={product.id}
+                        onAproveProduct={onAproveProduct}
+                        product={product}
+                      />
+                    ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="text-sm text-center text-gray-500 dark:text-gray-400">
+                Ops, parece que não há nada aqui! :(
+              </p>
+            )}
           </div>
           <div className={"painel" + (active[2] ? "" : " hidden")}>
             {providers ? (
               <ManageProviders
                 manageAprove={manageAprove}
-                onEdit={onEdit}
+                onEdit={onEditProvider}
                 openEditModal={openEditModal}
                 providersList={providersList}
               />
@@ -261,9 +330,24 @@ export default function Painel({ providers, categories }) {
             )}
           </div>
           <div className={"painel" + (active[3] ? "" : " hidden")}>
-            <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-              Ops, parece que não há nada aqui! :(
-            </p>
+            {products ? (
+              <div className="painel">
+                <ul>
+                  {productsList.map((product) => (
+                    <ManageProducts
+                      key={product.id}
+                      onAproveProduct={onAproveProduct}
+                      onRemoveProdutct={onRemoveProdutct}
+                      product={product}
+                    />
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="text-sm text-center text-gray-500 dark:text-gray-400">
+                Ops, parece que não há nada aqui! :(
+              </p>
+            )}
           </div>
         </div>
       </main>
@@ -272,6 +356,9 @@ export default function Painel({ providers, categories }) {
 }
 
 export async function getServerSideProps(context) {
+  const products = await fetch(process.env.BASE_URL + "/produtos/").then(
+    (res) => res.json()
+  );
   const providers = await fetch(process.env.BASE_URL + "/fornecedor/").then(
     (res) => res.json()
   );
@@ -280,6 +367,7 @@ export async function getServerSideProps(context) {
   );
   return {
     props: {
+      products,
       providers,
       categories,
     },

@@ -15,16 +15,14 @@ export default function Buscar({ categories }) {
       <main className="lg:flex max-w-screen-2xl mx-auto">
         <div className="flex-grow m-5">
           {item.length > 0 ? (
-            item.map(({ id, image, title, description, price, category }) => {
+            item.map(({ id, nome, descricao, categoria }) => {
               return (
                 <SearchProduct
                   key={id}
                   id={id}
-                  title={title}
-                  price={price}
-                  description={description}
-                  category={category}
-                  image={image}
+                  nome={nome}
+                  descricao={descricao}
+                  categoria={categoria}
                 />
               );
             })
