@@ -6,6 +6,7 @@ import { useCallback, useContext, useState } from "react";
 import { SearchContext } from "../context/SearchContext";
 import { OpenContext } from "../context/OpenContext";
 import { useToast } from "../context/ToastContext";
+import SearchBar from "./SearchBar";
 
 function Header() {
   const { data: session, status } = useSession();
@@ -55,6 +56,7 @@ function Header() {
               handleChange(e);
             }}
             className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4"
+            placeholder="Buscar pelo nome"
             type="text"
           />
           <SearchIcon
@@ -128,11 +130,13 @@ function Header() {
           </button>
         </div>
       </div>
+
       <div className="flex items-center space-x-3 p-2 pl-6 bg-amazon_blue-light text-white text-sm">
         <p className="link flex items-center" onClick={() => open(true)}>
           <MenuIcon className="h-6 mr-1" />
           Menu
         </p>
+        <SearchBar />
       </div>
     </header>
   );
