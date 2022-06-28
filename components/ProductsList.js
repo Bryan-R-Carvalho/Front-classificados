@@ -11,7 +11,7 @@ function ProductsList({ onProvide, product }) {
         />
 
         <div className="col-span-3 mx-5">
-          <p className="absolute top-2 right-80 text-xs italic text-gray-400">
+          <p className="text-right text-xs italic text-gray-400">
             {product.categoria}
           </p>
           <p>{product.nome}</p>
@@ -23,7 +23,7 @@ function ProductsList({ onProvide, product }) {
               : " Aguardando aprovação do administrador"}
           </p>
         </div>
-        <div className="flex items-center justify-center w-full px-4 py-2">
+        <div className="items-center justify-center w-full px-4 gap-2 flex flex-col lg:flex-row">
           {product.disponibilidade ? (
             <button
               className="flex button mx-2 cursor-pointer h-10 "
@@ -34,7 +34,7 @@ function ProductsList({ onProvide, product }) {
             </button>
           ) : (
             <button
-              className="flex buttonCadastrar mx-2 cursor-pointer h-10 "
+              className="flex buttonCadastrar mx-2 cursor-pointer h-10"
               onClick={() => onProvide(product)}
             >
               <ThumbUpIcon className="w-4 mx-2" />
@@ -42,10 +42,10 @@ function ProductsList({ onProvide, product }) {
             </button>
           )}
           <button
-            className="flex buttonRemover cursor-pointer h-10 "
+            className="flex buttonRemover cursor-pointer h-10  "
             onClick={() => onProvide(product)}
           >
-            <TrashIcon className="w-4 mx-2" />
+            <TrashIcon className="w-4 mx-2 " />
             <p>Remover</p>
           </button>
         </div>

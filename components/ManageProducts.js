@@ -17,7 +17,7 @@ function ManageProducts({ onAproveProduct, onRemoveProdutct, product }) {
             />
 
             <div className="col-span-3 mx-5">
-              <p className="absolute top-2 right-80 text-xs italic text-gray-400">
+              <p className="text-right text-xs italic text-gray-400">
                 {product.categoria}
               </p>
               <p>{product.nome}</p>
@@ -26,7 +26,7 @@ function ManageProducts({ onAproveProduct, onRemoveProdutct, product }) {
                 Fornecedor: {product.fornecedorNome}
               </p>
             </div>
-            <div className="flex items-center justify-center w-full px-4 py-2">
+            <div className="items-center justify-center w-full px-4 py-2 gap-2 flex flex-col lg:flex-row">
               {product.aprovado ? (
                 <button
                   className="flex button mx-2 cursor-pointer"
@@ -48,7 +48,7 @@ function ManageProducts({ onAproveProduct, onRemoveProdutct, product }) {
                 className="flex buttonRemover cursor-pointer"
                 onClick={() => onRemoveProdutct(product)}
               >
-                <TrashIcon className="w-4" />
+                <TrashIcon className="w-4 mx-2" />
                 <p>Remover</p>
               </button>
             </div>
