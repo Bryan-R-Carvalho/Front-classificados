@@ -20,7 +20,7 @@ export default function Home({ products, categories }) {
   );
 }
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const products = await fetch(process.env.BASE_URL + "/produtos/").then(
     (res) => res.json()
   );
